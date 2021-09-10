@@ -18,7 +18,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: sync faker2-GithubSync
+      - name: sync shaolin-GithubSync
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:

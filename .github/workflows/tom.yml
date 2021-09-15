@@ -1,4 +1,4 @@
-name: top-sync
+name: tom-sync
 on:
   schedule:
     - cron: '1 */6 * * *'

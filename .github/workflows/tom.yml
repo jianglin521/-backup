@@ -6,7 +6,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: sync-top-GithubSync
+    types: sync-tom-GithubSync
 jobs:
   repo-sync:
     env:

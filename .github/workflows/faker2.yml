@@ -1,4 +1,4 @@
-name: faker2-sync
+name: soy-tool-sync
 on:
   schedule:
     - cron: '1 */6 * * *'
@@ -22,7 +22,7 @@ jobs:
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/shufflewzc/faker2.git"
-          source_branch: "main"
-          destination_branch: "faker2"
+          source_repo: "https://gitee.com/soy-tool/app-script.git"
+          source_branch: "master"
+          destination_branch: "soy-tool"
           github_token: ${{ secrets.PAT }}

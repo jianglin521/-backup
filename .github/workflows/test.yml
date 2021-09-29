@@ -24,13 +24,14 @@ jobs:
               cp -fr /opt/shaolin-kongfu/zq/* "${GITHUB_WORKSPACE}/"
               cp -fr /opt/shaolin-kongfu/jc/* "${GITHUB_WORKSPACE}/"
 
-          - name: Commit files
-            run: |
-              git config --local user.email "123@163.com"
-              git config --local user.name "sync"
-              git add .
-              git commit -m "update" -a
+#           - name: Commit files
+#             run: |
+#               git config --local user.email "123@163.com"
+#               git config --local user.name "sync"
+#               git add .
+#               git commit -m "update" -a
           - name: Push changes
             uses: ad-m/github-push-action@master
             with:
+              destination_branch: "test"
               github_token: ${{ secrets.GITHUB_TOKEN }}

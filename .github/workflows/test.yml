@@ -26,6 +26,9 @@ jobs:
 
           - name: Send back
             run: |
+              pwd
+              cd /opt/shaolin-kongfu/zq
+              ls
               cp -fr /opt/shaolin-kongfu/zq/* "${GITHUB_WORKSPACE}/shaolin-kongfu/zq/"
               cp -fr /opt/shaolin-kongfu/jc/* "${GITHUB_WORKSPACE}/shaolin-kongfu/jc/"
               pwd

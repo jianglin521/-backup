@@ -32,6 +32,7 @@ jobs:
               git config --local user.name "test"
               git branch test
               git checkout test
+              touch aa.txt
               git add *
               git commit -m "update" -a
           - name: Push changes

@@ -26,13 +26,14 @@ jobs:
 
           - name: Commit files
             run: |
-              git config --local user.email "123@163.com"
-              git config --local user.name "sync"
+              git config --local user.email "test@163.com"
+              git config --local user.name "test"
+              git branch test
+              git checkout test
               git add .
               git commit -m "update" -a
           - name: Push changes
-            uses: ad-m/github-push-action@master
+            uses: ad-m/github-push-action@test
             with:
-              destination_branch: "test"
               github_token: ${{ secrets.GITHUB_TOKEN }}
               

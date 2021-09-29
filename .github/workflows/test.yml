@@ -4,7 +4,7 @@ on:
       branches: main
   workflow_dispatch:
 #  schedule:
-#    - cron: 0 16 * * *
+   - cron: 0 17 * * *
 jobs:
     Copy_Push:
         runs-on: ubuntu-18.04
@@ -13,23 +13,18 @@ jobs:
             uses: actions/checkout@v2
           - name: download
             run: |
-              mkdir -p /opt/shaolin/ & mkdir -p /opt/test/
+              mkdir -p /opt/shaolin/ & mkdir -p /opt/shaolin-back/
               git clone "https://github.com/shaolin-kongfu/js_scripts.git" "/opt/shaolin/"
-              mkdir -p /opt/shaolin2/ & mkdir -p /opt/test2/
-              git clone "https://github.com/shaolin-kongfu/js_scripts.git" "/opt/shaolin2/"
+              mkdir -p /opt/soy-tool/ & mkdir -p /opt/soy-tool-back/
+              git clone "https://gitee.com/soy-tool/app-script.git" "/opt/soy-tool/"
           - name: find
             run: |
-              find /opt/shaolin/ -name "*jc*.json" | xargs -I {} cp {} /opt/test/
-              find /opt/shaolin2/ -name "dsj.js" | xargs -I {} cp {} /opt/test2/
+              find /opt/shaolin/ -name "*jc*.json" | xargs -I {} cp {} /opt/shaolin-back/
+              find /opt/soy-tool/ -name "*.js" | xargs -I {} cp {} /opt/soy-tool-back/
           - name: Send back
             run: |
-              ls
-              mkdir -p "${GITHUB_WORKSPACE}/test"
-              mkdir -p "${GITHUB_WORKSPACE}/test2"
-              ls
-              cp -rf /opt/test/* "${GITHUB_WORKSPACE}/test"
-              cp -rf /opt/test2/* "${GITHUB_WORKSPACE}/test2"
-
+              mkdir -p "${GITHUB_WORKSPACE}/shaolin-back" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/shaolin-back"
+              mkdir -p "${GITHUB_WORKSPACE}/soy-tool-back" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/soy-tool-back"
           - name: Commit files
             run: |
               git config --local user.email "test@qq.com"

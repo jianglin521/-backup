@@ -3,8 +3,8 @@ on:
   push:
       branches: main
   workflow_dispatch:
-#  schedule:
-   - cron: 0 17 * * *
+  schedule:
+    - cron: 0 17 * * *
 jobs:
     Copy_Push:
         runs-on: ubuntu-18.04

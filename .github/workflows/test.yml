@@ -31,6 +31,8 @@ jobs:
             run: |
               git config --local user.email "test@qq.com"
               git config --local user.name "test"
+              ls
+              pwd
               git branch test
               git checkout test
               git add .

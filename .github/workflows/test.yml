@@ -26,16 +26,16 @@ jobs:
               cp -fr /opt/shaolin-kongfu/zq/* "${GITHUB_WORKSPACE}/"
               cp -fr /opt/shaolin-kongfu/jc/* "${GITHUB_WORKSPACE}/"
 
-          # - name: Commit files
-          #   run: |
-          #     git config --local user.email "test@qq.com"
-          #     git config --local user.name "test"
-          #     git branch test
-          #     git checkout test
-          #     git add *
-          #     git commit -m "update" -a
-          # - name: Push changes
-          #   uses: ad-m/github-push-action@master
-          #   with:
-          #     github_token: ${{ secrets.GITHUB_TOKEN }}
-          #     branch: 'test'
+          - name: Commit files
+            run: |
+              git config --local user.email "test@qq.com"
+              git config --local user.name "test"
+              git branch test
+              git checkout test
+              git add *
+              git commit -m "update" -a
+          - name: Push changes
+            uses: ad-m/github-push-action@master
+            with:
+              github_token: ${{ secrets.GITHUB_TOKEN }}
+              branch: 'test'

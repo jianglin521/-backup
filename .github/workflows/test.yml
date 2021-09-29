@@ -24,10 +24,13 @@ jobs:
               ls
               echo 11111111111111111111
 
-#           - name: Send back
-#             run: |
-#               cp -fr /opt/shaolin-kongfu/zq/* "${GITHUB_WORKSPACE}/shaolin-kongfu/zq/"
-#               cp -fr /opt/shaolin-kongfu/jc/* "${GITHUB_WORKSPACE}/shaolin-kongfu/jc/"
+          - name: Send back
+            run: |
+              cp -fr /opt/shaolin-kongfu/zq/* "${GITHUB_WORKSPACE}/shaolin-kongfu/zq/"
+              cp -fr /opt/shaolin-kongfu/jc/* "${GITHUB_WORKSPACE}/shaolin-kongfu/jc/"
+              pwd
+              ls
+              echo 222222222
 
 #           - name: Commit files
 #             run: |

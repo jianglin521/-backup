@@ -29,14 +29,14 @@ jobs:
 
           - name: Commit files
             run: |
-              git config --local user.email "1179447685@qq.com"
-              git config --local user.name "Automatic"
+              git config --local user.email "test@qq.com"
+              git config --local user.name "test"
               git add .
               git commit -m "update" -a
+              git push origin test
           - name: Push changes
             uses: ad-m/github-push-action@master
             with:
-              target_branch: test # 默认推送到你的仓库master分支
               github_token: ${{ secrets.GITHUB_TOKEN }}
 
             

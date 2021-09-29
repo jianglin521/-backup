@@ -42,6 +42,9 @@ jobs:
             uses: ad-m/github-push-action@master
             with:
               github_token: ${{ secrets.GITHUB_TOKEN }}
+              target_repository: jianglin521/backup  # 你要推送的仓库
+              target_branch: test  # 默认推送到你的仓库master分支
+              force: true  # 是否强制推送
 
             
             

@@ -13,9 +13,9 @@ jobs:
             uses: actions/checkout@v2
           - name: download
             run: |
-              mkdir -p /opt/shaolin/
+              mkdir -p /opt/shaolin/ & mkdir -p /opt/test/
               git clone "https://github.com/shaolin-kongfu/js_scripts.git" "/opt/shaolin/"
-              mkdir -p /opt/shaolin2/
+              mkdir -p /opt/shaolin2/ & mkdir -p /opt/test2/
               git clone "https://github.com/shaolin-kongfu/js_scripts.git" "/opt/shaolin2/"
           - name: find
             run: |

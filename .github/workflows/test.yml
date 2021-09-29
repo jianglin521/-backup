@@ -32,8 +32,6 @@ jobs:
             run: |
               git config --local user.email "test@qq.com"
               git config --local user.name "test"
-              git branch test
-              git checkout test
               git add *
               git commit -m "update" -a
           - name: Push changes
@@ -42,7 +40,5 @@ jobs:
               github_token: ${{ secrets.GITHUB_TOKEN }}
               branch: 'test'
               target_branch: 'test'  # 默认推送到你的仓库master分支
-              force: true  # 是否强制推送
-
             
             

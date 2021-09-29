@@ -19,29 +19,18 @@ jobs:
               find /opt/shaolin-kongfu/js_scripts/ -name "*jc*.json" | xargs -I {} cp {} /opt/shaolin-kongfu/jc/
               find /opt/shaolin-kongfu/zq/ -type f | xargs -I {} sed -i 's#raw.githubusercontent.com#ghproxy.com/https://raw.githubusercontent.com#g' {}
               find /opt/shaolin-kongfu/jc/ -type f | xargs -I {} sed -i 's#raw.githubusercontent.com#ghproxy.com/https://raw.githubusercontent.com#g' {}
-              echo  ${GITHUB_WORKSPACE}
-              pwd
-              ls
-              echo 11111111111111111111
-
           - name: Send back
             run: |
-              pwd
-              cd /opt/shaolin-kongfu/zq
-              ls
               cp -fr /opt/shaolin-kongfu/zq/* "${GITHUB_WORKSPACE}/"
               cp -fr /opt/shaolin-kongfu/jc/* "${GITHUB_WORKSPACE}/"
-              pwd
-              ls
-              echo 222222222
 
-#           - name: Commit files
-#             run: |
-#               git config --local user.email "1179447685@qq.com"
-#               git config --local user.name "Automatic"
-#               git add .
-#               git commit -m "update" -a
-#           - name: Push changes
-#             uses: ad-m/github-push-action@master
-#             with:
-#               github_token: ${{ secrets.GITHUB_TOKEN }}
+          - name: Commit files
+            run: |
+              git config --local user.email "123@163.com"
+              git config --local user.name "sync"
+              git add .
+              git commit -m "update" -a
+          - name: Push changes
+            uses: ad-m/github-push-action@master
+            with:
+              github_token: ${{ secrets.GITHUB_TOKEN }}

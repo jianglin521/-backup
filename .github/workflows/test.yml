@@ -33,7 +33,7 @@ jobs:
               git add .
               git commit -m "update" -a
           - name: Push changes
-            uses: ad-m/github-push-action@test
+            uses: ad-m/github-push-action@mastet
             with:
               github_token: ${{ secrets.GITHUB_TOKEN }}
               

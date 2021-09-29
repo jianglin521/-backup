@@ -29,8 +29,8 @@ jobs:
               pwd
               cd /opt/shaolin-kongfu/zq
               ls
-              cp -fr /opt/shaolin-kongfu/zq/* "${GITHUB_WORKSPACE}/shaolin-kongfu/zq/"
-              cp -fr /opt/shaolin-kongfu/jc/* "${GITHUB_WORKSPACE}/shaolin-kongfu/jc/"
+              cp -fr /opt/shaolin-kongfu/zq/* "${GITHUB_WORKSPACE}/"
+              cp -fr /opt/shaolin-kongfu/jc/* "${GITHUB_WORKSPACE}/"
               pwd
               ls
               echo 222222222

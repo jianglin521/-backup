@@ -27,8 +27,8 @@ jobs:
               git config --local user.name "test"
               git pull 
               git checkout origin/test
-              mkdir -p "${GITHUB_WORKSPACE}/shaolin-back" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/shaolin-back"
-              mkdir -p "${GITHUB_WORKSPACE}/soy-tool-back" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/soy-tool-back"
+              mkdir -p "${GITHUB_WORKSPACE}/shaolin-back2" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/shaolin-back2"
+              mkdir -p "${GITHUB_WORKSPACE}/soy-tool-back2" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/soy-tool-back2"
           - name: Commit files
             run: |
               git add *

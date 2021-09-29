@@ -29,6 +29,7 @@ jobs:
             run: |
               git config --local user.email "test@qq.com"
               git config --local user.name "test"
+              git pull 
               # git branch test
               # git checkout test
               git add *

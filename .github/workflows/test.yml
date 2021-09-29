@@ -23,14 +23,14 @@ jobs:
               find /opt/soy-tool/ -name "*.js" | xargs -I {} cp {} /opt/soy-tool-back/
           - name: Send back
             run: |
-              mkdir -p "${GITHUB_WORKSPACE}/shaolin-back" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/shaolin-back"
-              mkdir -p "${GITHUB_WORKSPACE}/soy-tool-back" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/soy-tool-back"
-          - name: Commit files
-            run: |
               git config --local user.email "test@qq.com"
               git config --local user.name "test"
               git pull 
               git checkout origin/test
+              mkdir -p "${GITHUB_WORKSPACE}/shaolin-back" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/shaolin-back"
+              mkdir -p "${GITHUB_WORKSPACE}/soy-tool-back" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/soy-tool-back"
+          - name: Commit files
+            run: |
               git add *
               git commit -m "update" -a
           - name: Push changes

@@ -23,6 +23,6 @@ jobs:
         if: env.PAT
         with:
           source_repo: "https://github.com/YaphetS0903/JStest.git"
-          source_branch: "master"
+          source_branch: "main"
           destination_branch: "YaphetS0903"
           github_token: ${{ secrets.PAT }}

@@ -13,27 +13,27 @@ jobs:
             uses: actions/checkout@v2
           - name: download
             run: |
-              mkdir -p /opt/shaolin/ & mkdir -p /opt/shaolin-back/
+              mkdir -p /opt/backup/
+              mkdir -p /opt/shaolin/
               git clone "https://github.com/shaolin-kongfu/js_scripts.git" "/opt/shaolin/"
-              mkdir -p /opt/soy-tool/ & mkdir -p /opt/soy-tool-back/
+              mkdir -p /opt/soy-tool/
               git clone "https://gitee.com/soy-tool/app-script.git" "/opt/soy-tool/"
-              mkdir -p /opt/YaphetS0903/ & mkdir -p /opt/YaphetS0903-back/
+              mkdir -p /opt/YaphetS0903/
               git clone "https://github.com/YaphetS0903/JStest.git" "/opt/YaphetS0903/"
           - name: find
             run: |
-              find /opt/shaolin/ -name "*jc*.json" | xargs -I {} cp {} /opt/shaolin-back/
-              find /opt/soy-tool/ -name "*.js" | xargs -I {} cp {} /opt/soy-tool-back/
-              find /opt/YaphetS0903/ -name "*.json | qxq.js" | xargs -I {} cp {} /opt/YaphetS0903-back/
+              find /opt/shaolin/ -name "*jc*.json" | xargs -I {} cp {} /opt/backup/
+              find /opt/soy-tool/ -name "*.json" | xargs -I {} cp {} /opt/backup/
+              find /opt/YaphetS0903/ -name "*.json" | xargs -I {} cp {} /opt/backup/
+              find /opt/YaphetS0903/ -name "qxq.js" | xargs -I {} cp {} /opt/backup/
           - name: Send back
             run: |
               git config --local user.email "test@qq.com"
               git config --local user.name "test"
-              git pull 
+              git pull origin/test
               git checkout origin/test
               rm -rf *
-              mkdir -p "${GITHUB_WORKSPACE}/shaolin" && cp -rf /opt/shaolin-back/* "${GITHUB_WORKSPACE}/shaolin"
-              mkdir -p "${GITHUB_WORKSPACE}/soy-tool" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/soy-tool"
-              mkdir -p "${GITHUB_WORKSPACE}/YaphetS0903" && cp -rf /opt/YaphetS0903/* "${GITHUB_WORKSPACE}/YaphetS0903"
+              mkdir -p "${GITHUB_WORKSPACE}/" && cp -rf /opt/backup/* "${GITHUB_WORKSPACE}/"
           - name: Commit files
             run: |
               git add *

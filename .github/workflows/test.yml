@@ -30,7 +30,7 @@ jobs:
             run: |
               git config --local user.email "test@qq.com"
               git config --local user.name "test"
-              git pull origin/test
+              git pull test
               git checkout origin/test
               rm -rf *
               mkdir -p "${GITHUB_WORKSPACE}/" && cp -rf /opt/backup/* "${GITHUB_WORKSPACE}/"

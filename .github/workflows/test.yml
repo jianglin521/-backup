@@ -31,9 +31,9 @@ jobs:
               git pull 
               git checkout origin/test
               rm -rf *
-              mkdir -p "${GITHUB_WORKSPACE}/shaolin" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/shaolin"
+              mkdir -p "${GITHUB_WORKSPACE}/shaolin" && cp -rf /opt/shaolin-back/* "${GITHUB_WORKSPACE}/shaolin"
               mkdir -p "${GITHUB_WORKSPACE}/soy-tool" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/soy-tool"
-              mkdir -p "${GITHUB_WORKSPACE}/YaphetS0903" && cp -rf /opt/soy-tool-back/* "${GITHUB_WORKSPACE}/YaphetS0903"
+              mkdir -p "${GITHUB_WORKSPACE}/YaphetS0903" && cp -rf /opt/YaphetS0903/* "${GITHUB_WORKSPACE}/YaphetS0903"
           - name: Commit files
             run: |
               git add *

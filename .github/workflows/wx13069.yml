@@ -23,6 +23,6 @@ jobs:
         if: env.PAT
         with:
           source_repo: "https://github.com/wx13069/JD.git"
-          source_branch: "main"
+          source_branch: "master"
           destination_branch: "wx13069"
           github_token: ${{ secrets.PAT }}

@@ -39,11 +39,14 @@ jobs:
               mkdir -p "${GITHUB_WORKSPACE}/" && cp -rf /opt/backup/* "${GITHUB_WORKSPACE}/"
           - name: Commit files
             run: |
-              git add *
-              git commit -m "update" -a
-          - name: Push changes
-            uses: ad-m/github-push-action@master
-            with:
-              github_token: ${{ secrets.GITHUB_TOKEN }}
-              branch: 'test'
+              if [ -n "$(git status -s)" ];then
+                  git add *
+                  git commit -m "update" -a
+                  git push origin test
+              fi
+          # - name: Push changes
+          #   uses: ad-m/github-push-action@master
+          #   with:
+          #     github_token: ${{ secrets.GITHUB_TOKEN }}
+          #     branch: 'test'
               # force: true

@@ -11,7 +11,7 @@ jobs:
         steps:
           - name: Checkout repo
             uses: actions/checkout@v2
-          - name: 下载文件
+          - name: download
             run: |
               mkdir -p /opt/backup/
               mkdir -p /opt/shaolin/
@@ -22,14 +22,14 @@ jobs:
               git clone "https://github.com/YaphetS0903/JStest.git" "/opt/YaphetS0903/"
               mkdir -p /opt/ziye888/
               git clone "https://github.com/ziye888/JavaScript.git" "/opt/ziye888/"
-          - name: 查找文件
+          - name: find
             run: |
               find /opt/shaolin/ -name "*jc*.json" | xargs -I {} cp {} /opt/backup/
               find /opt/soy-tool/ -name "*.json" | xargs -I {} cp {} /opt/backup/
               find /opt/YaphetS0903/ -name "*.json" | xargs -I {} cp {} /opt/backup/
               find /opt/YaphetS0903/ -name "qxq.js" | xargs -I {} cp {} /opt/backup/
               find /opt/ziye888/ -name "dsj.js" | xargs -I {} cp {} /opt/backup/
-          - name: 复制文件
+          - name: Send back
             run: |
               git config --local user.email "test@qq.com"
               git config --local user.name "test"
@@ -37,7 +37,7 @@ jobs:
               git checkout origin/test
               rm -rf *
               mkdir -p "${GITHUB_WORKSPACE}/" && cp -rf /opt/backup/* "${GITHUB_WORKSPACE}/"
-          - name: 提交文件
+          - name: Commit files
             run: |
               if [ -n "$(git status -s)" ];then
                   git add *

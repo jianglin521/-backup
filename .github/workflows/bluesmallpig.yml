@@ -1,7 +1,7 @@
-name: passerby-b-sync
+name: bluesmallpig-sync
 on:
   schedule:
-    - cron: '15 */6 * * *'
+    - cron: '25 */6 * * *'
   workflow_dispatch:
   watch:
     types: started
@@ -22,9 +22,7 @@ jobs:
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/passerby-b/mt_fruit.git"
+          source_repo: "https://github.com/bluesmallpig/scripts.git"
           source_branch: "main"
-          destination_branch: "passerby-b"
+          destination_branch: "bluesmallpig"
           github_token: ${{ secrets.PAT }}
-
-

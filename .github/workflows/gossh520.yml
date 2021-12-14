@@ -1,7 +1,7 @@
-name: wx13069-sync
+name: gossh520-sync
 on:
   schedule:
-    - cron: '1 */6 * * *'
+    - cron: '20 */6 * * *'
   workflow_dispatch:
   watch:
     types: started
@@ -22,7 +22,7 @@ jobs:
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/wx13069/JD.git"
+          source_repo: "https://gitee.com/gossh520/script.git"
           source_branch: "master"
-          destination_branch: "wx13069"
+          destination_branch: "gossh520"
           github_token: ${{ secrets.PAT }}

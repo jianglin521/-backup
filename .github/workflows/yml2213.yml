@@ -1,4 +1,4 @@
-name: tom-sync
+name: yml2213-sync
 on:
   schedule:
     - cron: '1 */6 * * *'
@@ -6,7 +6,7 @@ on:
   watch:
     types: started
   repository_dispatch:
-    types: sync-tom-GithubSync
+    types: sync-yml2213-GithubSync
 jobs:
   repo-sync:
     env:
@@ -22,7 +22,7 @@ jobs:
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/xl2101200/-.git"
+          source_repo: "https://github.com/yml2213/javascript.git"
           source_branch: "main"
-          destination_branch: "tom"
+          destination_branch: "yml2213"
           github_token: ${{ secrets.PAT }}

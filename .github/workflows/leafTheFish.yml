@@ -1,4 +1,4 @@
-name: leafxcy-sync
+name: leafTheFish-sync
 on:
   schedule:
     - cron: '20 */6 * * *'
@@ -22,7 +22,7 @@ jobs:
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/leafxcy/JavaScript.git"
+          source_repo: "https://github.com/leafTheFish/DeathNote.git"
           source_branch: "main"
-          destination_branch: "leafxcy"
+          destination_branch: "leafTheFish"
           github_token: ${{ secrets.PAT }}

@@ -2,7 +2,7 @@
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
 越城监控兑换_v0.1 仅监控共富专区
 不支持多账号，企业微信通知 参数脚本内置
-cron：0 0/5 * * * ?
+
 抓包 https://promoa.ejiaofei.cn/ShaoXingLogin/VerifyUser 取出cookie，body下的参数
 """
 
@@ -15,8 +15,6 @@ sign = ""
 key = ""  # 企业微信推送 webhook 后面的 key
 
 range = 6000  # 默认低于6000积分不兑换
-
-
 
 ##################################################源码区域，非维护勿动##################################################
 import json
@@ -152,5 +150,6 @@ else:
                             exit()
                     else:
                         print(f"积分小于{range}不兑换")
+
     else:
         print("No value found for SESSIONID")

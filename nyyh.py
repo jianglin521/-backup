@@ -3,7 +3,7 @@
 农业银行_V1.0  种植小麦，成熟可兑换20/50/100立减金，限制河南地区！
 活动入口 https://s1.ax1x.com/2023/07/31/pP9gbXd.png 如果失效联系作者更换
 抓https://nh.xfd365.com/api/取出cookie,token
-
+默认助力作者 如果介意请停止使用该脚本
 export nyyhtoken=cookie@token
 多账号用'===='隔开 例 账号1====账号2
 cron：0 0 10,20 * * ?

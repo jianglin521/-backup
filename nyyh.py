@@ -1,6 +1,7 @@
 """
 @Qim97 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-农业银行_V1.0  种植小麦，成熟可兑换20/50/100立减金，限制河南地区！
+礼豫河南_V1.01  种植小麦，成熟可兑换20/50/100立减金，限制河南地区！
+2023/8/1 updata 修复已知bug，增加答题抽奖功能
 活动入口 https://s1.ax1x.com/2023/07/31/pP9gbXd.png 如果失效联系作者更换
 抓https://nh.xfd365.com/api/取出cookie,token
 默认助力作者 如果介意请停止使用该脚本
@@ -74,27 +75,40 @@ else:
             print(f"获取ID失败")
 
         print('================开始签到================')
-        time.sleep(3)
-        url = "https://nh.xfd365.com/api/wheat/get_today_task"
-
-        headers = {
-            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/20G75 NebulaSDK/1.8.100112 Nebula Bankabc/Portal BankabciPhone/8.2.0 rv:8.2.1 iOS/16.6WK PSDType(1) mPaaSClient/8.2.1",
-            "Cookie": cookie
-        }
+        url = "https://nh.xfd365.com/api/wheat/login_task_list"
 
         data = {
             "token": token,
-            "wheat_user_id": 395740,
-            "task_id": 1
         }
 
         response = requests.post(url, json=data, headers=headers)
         status = response.json()
-        errmsg = status['errmsg']  # 签到值
-        if response.status_code == 200:
-            print(errmsg)
+        if status['errno'] == 0:
+            task_id = status['today_login_num']
+            time.sleep(3)
+            url = "https://nh.xfd365.com/api/wheat/get_today_task"
+
+            headers = {
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/20G75 NebulaSDK/1.8.100112 Nebula Bankabc/Portal BankabciPhone/8.2.0 rv:8.2.1 iOS/16.6WK PSDType(1) mPaaSClient/8.2.1",
+                "Cookie": cookie
+            }
+
+            data = {
+                "token": token,
+                "wheat_user_id": wheat_id,
+                "task_id": task_id
+            }
+
+            response = requests.post(url, json=data, headers=headers)
+            status = response.json()
+            errmsg = status['errmsg']  # 签到值
+            if response.status_code == 200:
+                print(errmsg)
+            else:
+                print(f"请求失败{status}")
+
         else:
-            print(f"请求失败{status}")
+            print("未获取到签到天数，❌❌❌❌❌")
 
         print("================获取任务列表================")
         time.sleep(3)
@@ -277,3 +291,72 @@ else:
                 print("❌❌❌❌❌，请与作者绑定好友关系后重试")
         else:
             print(f"❌❌❌❌❌{data}")
+        print("================开始答题抽奖================")
+        for i in range(2):
+            time.sleep(3)
+            url = "https://nh.xfd365.com/api/nhunion/get_draw_problem"
+
+            headers = {
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/20G75 NebulaSDK/1.8.100112 Nebula Bankabc/Portal BankabciPhone/8.2.0 rv:8.2.1 iOS/16.6WK PSDType(1) mPaaSClient/8.2.1",
+                "Cookie": cookie
+            }
+
+            data = {
+                "token": token
+            }
+
+            response = requests.post(url, json=data, headers=headers)
+            if response.json()['errno'] == 0:
+                response_data = response.json()['data']
+                q_id = response_data['q_id']
+
+                print(response_data)  # 打印响应内容
+                # 提交答案
+                url = "https://nh.xfd365.com/api/nhunion/answer_draw_problem"
+                data = {
+                    "token": token,
+                    "q_id": q_id,
+                    "user_ta": 1
+                }
+                response_data = requests.post(url, json=data, headers=headers)
+                response = response_data.json()
+                time.sleep(3)
+                if response["errmsg"] == "回答正确":
+                    print(f"{response['errmsg']}")
+                elif response["errmsg"] == "回答错误":
+                    print('回答错误，尝试重新答题')
+                    time.sleep(3)
+                    data = {
+                        "token": token,
+                        "q_id": q_id,
+                        "user_ta": 2
+                    }
+                    response_data = requests.post(url, json=data, headers=headers)
+                    response = response_data.json()
+                    if response["errmsg"] == "回答正确":
+                        print(f"{response['errmsg']}")
+                    else:
+                        print(f"❌❌❌❌❌，{response}")
+                else:
+                    print(f"错误未知！！！{response}")
+
+            else:
+                print(f'{response.json()["errmsg"]},退出')
+                break
+        url = "https://nh.xfd365.com/api/nhunion/get_user_this_xfq_number"
+
+        headers = {
+            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/20G75 NebulaSDK/1.8.100112 Nebula Bankabc/Portal BankabciPhone/8.2.0 rv:8.2.1 iOS/16.6WK PSDType(1) mPaaSClient/8.2.1",
+            "Cookie": cookie
+        }
+
+        data = {
+            "token": token
+        }
+
+        response = requests.post(url, json=data, headers=headers)
+        response_data = response.json()
+        coupon_number_arr = response_data['coupon_number_arr']
+        formatted_coupon_number = [str(num).zfill(6) for num in coupon_number_arr]
+        print(f"获得抽奖号码：{formatted_coupon_number}")
+        print(f"开奖时间：{response_data['open_day']}")

@@ -2,7 +2,7 @@
 @Qim97 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
 礼豫河南_V1.01  种植小麦，成熟可兑换20/50/100立减金，限制河南地区！
 2023/8/1 updata 修复已知bug，增加答题抽奖功能
-活动入口 https://s1.ax1x.com/2023/07/31/pP9gbXd.png 如果失效联系作者更换
+活动入口 https://i.postimg.cc/NFjpDJcK/image.png 如果失效联系作者更换
 抓https://nh.xfd365.com/api/取出cookie,token
 默认助力作者 如果介意请停止使用该脚本
 export nyyhtoken=cookie@token

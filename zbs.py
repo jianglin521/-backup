@@ -1,6 +1,7 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-植白说官方商城_V1.0  签到 牛奶活动 如需完成刷人头奖励联系 https://t.me/qianmo98
+植白说官方商城_V1.0  活动入口https://i.postimg.cc/fytx3nxQ/bc307f91d48671893a471f752c55e05.png
+签到 牛奶活动 如需完成刷人头奖励联系 https://t.me/qianmo98
 
 抓https://zbs.20171026.com/demo/取出X-Dts-Token
 

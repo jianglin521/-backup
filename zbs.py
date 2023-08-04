@@ -1,7 +1,7 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
 植白说官方商城_V1.0  活动入口https://i.postimg.cc/fytx3nxQ/bc307f91d48671893a471f752c55e05.png
-签到 牛奶活动 如需完成刷人头奖励联系 https://t.me/qianmo98
+签到/分享 牛奶活动 如需完成刷人头奖励联系 https://t.me/qianmo98
 
 抓https://zbs.20171026.com/demo/取出X-Dts-Token
 
@@ -10,11 +10,13 @@ export zbstoken=X-Dts-Token
 corn：0 0 8 * * ?
 """
 
+
 import os
 
 import requests
-#from dotenv import load_dotenv
-#load_dotenv()
+
+# from dotenv import load_dotenv
+# load_dotenv()
 accounts = os.getenv('zbstoken')
 
 if accounts is None:
@@ -49,3 +51,14 @@ else:
             print(f"签到成功----{signCount}\n积分余额----{integral}")
         else:
             print('请求失败')
+
+        for i in range(3):
+            url = 'https://zbs.20171026.com/demo/wx/user/addIntegralByShare'
+            response = requests.get(url, headers=headers)
+            response.code = response.json()
+            # 处理响应
+            if response.code['errno'] == 0:
+                print(f"第{i+1}分享成功")
+            else:
+                print('请求失败')
+

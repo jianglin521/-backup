@@ -17,10 +17,7 @@ import os
 import time
 
 import requests
-from dotenv import load_dotenv
 
-# 加载 .env 文件
-load_dotenv()
 
 # 获取 xwytoken 环境变量值
 accounts = os.getenv('xwytoken')

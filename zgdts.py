@@ -7,7 +7,8 @@ https://www.zgdts.zhonghebang.cn/#/pages/login/register?invite=buEGHV
 0撸，注册获得5米，每天签到得1米，不建议投资
 流程：先扫码注册，实名后加入官方群753554661，发送手机号+已实名+领取金币，等待50金币到账，金币到账后参与一次大逃杀即可成为有效玩家，即可开始每天的签到
 然后出售50币收益约6块，每日签到一次10币约1块
-export zgtoken=账号@密码 多账户换行隔开
+抓任意包取出Authorization
+export zgtoken=Authorization 多账户换行隔开
 corn：10 10 * * *
 '''
 
@@ -31,30 +32,14 @@ else:
     for i, account in enumerate(accounts_list, start=1):
         # 按分号参分割当前账号的不同数
         values = account.split('@')
-        phone,password = values[0],values[1] # 获取各个值
+        Authorization = values[0] # 获取各个值
         print(f"\n=======开始执行账号{i}=======")
-        url = "https://api.zgdts.zhonghebang.cn/api/v1/login"
 
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Linux; Android 8.1.0; vivo Y85 Build/OPM1.171019.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/68.0.3440.91 Mobile Safari/537.36 Html5Plus/1.0",
-        }
-        data = {
-            'phone': phone,
-            'password': password
-        }
-        login = requests.post(url, headers=headers, data=data).json()
-        if login['code'] == 1:
-            access_token = login['data']['access_token']
-            print(f"{login['msg']}")
-        elif login['code'] == 0:
-            print(f"{login['msg']}")
-        else:
-            print(f"错误未知{login}")
 
         print("==============查询账号==============")
         url = f"https://api.zgdts.zhonghebang.cn/api/v1/user_profile"
         headers = {
-            "authorization": 'Bearer ' + access_token,
+            "authorization": Authorization,
             "User-Agent": "Mozilla/5.0 (Linux; Android 8.1.0; vivo Y85 Build/OPM1.171019.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/68.0.3440.91 Mobile Safari/537.36 Html5Plus/1.0",
         }
 

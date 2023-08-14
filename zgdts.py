@@ -1,6 +1,8 @@
 '''
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-战国大逃杀_V1.0      bug反馈 https://t.me/qianmo98
+战国大逃杀_V1.1
+updata 修改登录方式，修复账号封禁无法登录
+bug反馈 https://t.me/qianmo98
 task 签到，后续陆续增加
 无需下载,浏览器打开，
 https://www.zgdts.zhonghebang.cn/#/pages/login/register?invite=buEGHV

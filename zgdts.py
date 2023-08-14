@@ -13,7 +13,15 @@ https://www.zgdts.zhonghebang.cn/#/pages/login/register?invite=buEGHV
 export zgtoken=Authorization 多账户换行隔开
 corn：10 10 * * *
 '''
+import requests
+import re
 
+response = requests.get('https://netcut.cn/p/e9a1ac26ab3e543b')
+note_content_list = re.findall(r'"note_content":"(.*?)"', response.text)
+formatted_note_content_list = [note.replace('\\n', '\n').replace('\\/', '/') for note in note_content_list]
+
+for note in formatted_note_content_list:
+    print(note)
 
 
 

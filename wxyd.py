@@ -1,12 +1,11 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-微信阅读_V1.0   入口：https://i.postimg.cc/RV8Y0tQL/1692250358858.png
+微信阅读_V1.1   入口：https://i.postimg.cc/RV8Y0tQL/1692250358858.png
 阅读文章抓出cookie，time，sign 建议手动阅读5篇左右再使用脚本，不然100%黑！！！一小时一次，每天到底几轮自己测试
 export ydtoken=cookie@time@sign
 多账号用'===='隔开 例 账号1====账号2
 cron：23 7-23/1 * * *
 """
-
 import re
 
 
@@ -74,7 +73,7 @@ else:
                 mid = response['data']['link'].split('&mid=')[1].split('&')[0]
                 print(f"获取文章成功---{mid}")
                 import time
-                time.sleep(8)
+                time.sleep(10)
                 url = "http://2477726.9o.10r8cvn6b1.cloud/read/finish"
                 response = requests.post(url, headers=headers, data=data).json()
                 if response['code'] == 0:
@@ -88,4 +87,11 @@ else:
                     print(f"{response['message']}")
                     break
 
-
+    print(f"============开始微信提现============")
+    url="http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
+    data = {
+        "time": time,
+        "sign": sign,
+    }
+    response = requests.get(url, headers=headers, json=data).json()
+    print(response['message'])

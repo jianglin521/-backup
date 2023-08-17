@@ -1,14 +1,15 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-微信阅读_V1.1   入口：https://i.postimg.cc/nzPhJmGQ/1.png
+微信阅读_V1.2   入口：https://postimg.cc/YGQHNhVp
 阅读文章抓出cookie，time，sign 建议手动阅读5篇左右再使用脚本，不然100%黑！！！一小时一次，每天到底几轮自己测试
-export ydtoken=cookie@time@sign
+export ydtoken=cookie
 多账号用'===='隔开 例 账号1====账号2
 cron：23 7-23/1 * * *
 """
+
 import re
-
-
+import time
+import hashlib
 import os
 import requests
 response = requests.get('https://netcut.cn/p/e9a1ac26ab3e543b')
@@ -35,9 +36,15 @@ else:
     for i, account in enumerate(accounts_list, start=1):
         # 按@符号分割当前账号的不同参数
         values = account.split('@')
-        cookie, time, sign = values[0], values[1], values[2]
+        cookie,  = values[0],
         # 输出当前正在执行的账号
         print(f"\n=======开始执行账号{i}=======")
+        current_time = str(int(time.time()))
+
+        # 计算 sign
+        sign_str = f'key=4fck9x4dqa6linkman3ho9b1quarto49x0yp706qi5185o&time={current_time}'
+        sha256_hash = hashlib.sha256(sign_str.encode())
+        sign = sha256_hash.hexdigest()
         url = "http://2477726.9o.10r8cvn6b1.cloud/person/info"
 
         headers = {
@@ -46,7 +53,7 @@ else:
         }
 
         data = {
-            "time": time,
+            "time": current_time,
             "sign": sign
         }
 
@@ -89,9 +96,11 @@ else:
 
     print(f"============开始微信提现============")
     url="http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
-    data = {
-        "time": time,
-        "sign": sign,
-    }
+
     response = requests.get(url, headers=headers, json=data).json()
-    print(response['message'])
+    if response['code']==0:
+        print(response['message'])
+    elif response['code']==1:
+        print(response['message'])
+    else:
+        print(f"错误未知{response}")

@@ -6,8 +6,10 @@ export ydtoken=cookie@time@sign
 多账号用'===='隔开 例 账号1====账号2
 cron：23 7-23/1 * * *
 """
-
+from dotenv import load_dotenv
+load_dotenv()
 import re
+
 
 import os
 import requests
@@ -68,6 +70,7 @@ else:
 
             if response['code'] == 1:
                 print(response['message'])
+                break
             else:
                 mid = response['data']['link'].split('&mid=')[1].split('&')[0]
                 print(f"获取文章成功---{mid}")
@@ -85,4 +88,5 @@ else:
                 else:
                     print(f"{response['message']}")
                     break
+
 

@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-微信阅读_V1.1   入口：https://i.postimg.cc/RV8Y0tQL/1692250358858.png
+微信阅读_V1.1   入口：https://i.postimg.cc/nzPhJmGQ/1.png
 阅读文章抓出cookie，time，sign 建议手动阅读5篇左右再使用脚本，不然100%黑！！！一小时一次，每天到底几轮自己测试
 export ydtoken=cookie@time@sign
 多账号用'===='隔开 例 账号1====账号2

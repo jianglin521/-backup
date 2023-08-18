@@ -6,10 +6,7 @@ export ydtoken=cookie
 多账号用'===='隔开 例 账号1====账号2
 cron：23 7-23/1 * * *
 """
-from dotenv import load_dotenv
 
-# 加载 .env 文件
-load_dotenv()
 import re
 import time
 import hashlib

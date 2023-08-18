@@ -1,7 +1,8 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-微信阅读_V1.2   入口：https://i.postimg.cc/vT97PNc2/1692348223296.png
-阅读文章抓出cookie 建议手动阅读5篇左右再使用脚本，不然100%黑！！！一小时一次，每天到底几轮自己测试
+微信阅读_V1.3   入口：http://2477776.n9hubozcudp9z.nnrumjgibj.cloud/?p=2477776
+阅读文章抓出cookie（找不到搜索Cookie关键词） 建议手动阅读5篇左右再使用脚本，不然100%黑！！！一小时一次，每天到底几轮自己测试
+8/18_update 修复bug
 export ydtoken=cookie
 多账号用'===='隔开 例 账号1====账号2
 cron：23 7-23/1 * * *
@@ -36,7 +37,7 @@ else:
     for i, account in enumerate(accounts_list, start=1):
         # 按@符号分割当前账号的不同参数
         values = account.split('@')
-        cookie,  = values[0],
+        cookie, = values[0],
         # 输出当前正在执行的账号
         print(f"\n=======开始执行账号{i}=======")
         current_time = str(int(time.time()))
@@ -45,8 +46,7 @@ else:
         sign_str = f'key=4fck9x4dqa6linkman3ho9b1quarto49x0yp706qi5185o&time={current_time}'
         sha256_hash = hashlib.sha256(sign_str.encode())
         sign = sha256_hash.hexdigest()
-        url = "http://2477726.9o.10r8cvn6b1.cloud/person/info"
-
+        url = "http://2477726.neavbkz.jweiyshi.r0ffky3twj.cloud/share"
         headers = {
             "User-Agent": "Mozilla/5.0 (Linux; Android 9; V1923A Build/PQ3B.190801.06161913; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/91.0.4472.114 Safari/537.36 MMWEBID/5635 MicroMessenger/8.0.40.2420(0x28002837) WeChat/arm64 Weixin Android Tablet NetType/WIFI Language/zh_CN ABI/arm64",
             "Cookie": cookie
@@ -56,19 +56,27 @@ else:
             "time": current_time,
             "sign": sign
         }
+        response = requests.get(url, headers=headers, json=data).json()
+        share_link = response['data']['share_link'][0]
+        p_value = share_link.split('=')[1].split('&')[0]
+
+        url = "http://2477726.neavbkz.jweiyshi.r0ffky3twj.cloud/read/info"
 
         response = requests.get(url, headers=headers, json=data).json()
 
         if response['code'] == 0:
-            pid = response['data']['pid']
             remain = response['data']['remain']
-            print(f"ID:{pid}\n钢镚余额:{remain}")
-
+            read=response['data']['read']
+            print(f"ID:{p_value}-----钢镚余额:{remain}\n今日阅读量::{read}\n推广链接:{share_link}")
         else:
             print(response['message'])
 
         print("============开始执行阅读文章============")
         for i in range(30):
+            # 计算 sign
+            sign_str = f'key=4fck9x4dqa6linkman3ho9b1quarto49x0yp706qi5185o&time={current_time}'
+            sha256_hash = hashlib.sha256(sign_str.encode())
+            sign = sha256_hash.hexdigest()
             url = "http://2477726.9o.10r8cvn6b1.cloud/read/task"
 
             response = requests.get(url, headers=headers, json=data).json()
@@ -77,23 +85,27 @@ else:
                 print(response['message'])
                 break
             else:
-                mid = response['data']['link'].split('&mid=')[1].split('&')[0]
-                print(f"获取文章成功---{mid}")
-                import time
-                time.sleep(10)
-                url = "http://2477726.9o.10r8cvn6b1.cloud/read/finish"
-                response = requests.post(url, headers=headers, data=data).json()
-                if response['code'] == 0:
-                    if response['data']['check'] is False:  # 注意这里使用 is False
-                        gain = response['data']['gain']
-                        print(f"阅读文章成功---获得钢镚{gain}")
-                    else:
-                        print("check=True,请手动阅读过检测")
-                        break
-                else:
-                    print(f"{response['message']}")
-                    break
+                try:
+                    mid = response['data']['link'].split('&mid=')[1].split('&')[0]
+                    print(f"获取文章成功---{mid}")
+                    import time
 
+                    time.sleep(10)
+                    url = "http://2477726.9o.10r8cvn6b1.cloud/read/finish"
+                    response = requests.post(url, headers=headers, data=data).json()
+                    if response['code'] == 0:
+                        if response['data']['check'] is False:
+                            gain = response['data']['gain']
+                            print(f"阅读文章成功---获得钢镚[{gain}]")
+                        else:
+                            print("check=True,请手动阅读过检测")
+                            break
+                    else:
+                        print(f"{response['message']}")
+                        break
+
+                except KeyError:
+                    print(f"获取文章失败,错误未知{response}")
         print(f"============开始微信提现============")
         url = "http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
 

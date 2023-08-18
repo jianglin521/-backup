@@ -1,12 +1,15 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-微信阅读_V1.2   入口：https://i.postimg.cc/Xq75gzft/aab768d55c2e1dfdf368aff59409a3c.jpg
-阅读文章抓出cookie，time，sign 建议手动阅读5篇左右再使用脚本，不然100%黑！！！一小时一次，每天到底几轮自己测试
+微信阅读_V1.2   入口：https://i.postimg.cc/vT97PNc2/1692348223296.png
+阅读文章抓出cookie 建议手动阅读5篇左右再使用脚本，不然100%黑！！！一小时一次，每天到底几轮自己测试
 export ydtoken=cookie
 多账号用'===='隔开 例 账号1====账号2
 cron：23 7-23/1 * * *
 """
+from dotenv import load_dotenv
 
+# 加载 .env 文件
+load_dotenv()
 import re
 import time
 import hashlib
@@ -94,13 +97,13 @@ else:
                     print(f"{response['message']}")
                     break
 
-    print(f"============开始微信提现============")
-    url="http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
+        print(f"============开始微信提现============")
+        url = "http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
 
-    response = requests.get(url, headers=headers, json=data).json()
-    if response['code']==0:
-        print(response['message'])
-    elif response['code']==1:
-        print(response['message'])
-    else:
-        print(f"错误未知{response}")
+        response = requests.get(url, headers=headers, json=data).json()
+        if response['code'] == 0:
+            print(response['message'])
+        elif response['code'] == 1:
+            print(response['message'])
+        else:
+            print(f"错误未知{response}")

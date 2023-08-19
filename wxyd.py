@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-微信阅读_V1.3   入口：http://2477776.n9hubozcudp9z.nnrumjgibj.cloud/?p=2477776
+微信阅读_V1.3   入口：http://2477726.cfw6.0omh3aqwm9.cloud/?p=2477726
 阅读文章抓出cookie（找不到搜索Cookie关键词） 建议手动阅读5篇左右再使用脚本，不然100%黑！！！一小时一次，每天到底几轮自己测试
 8/18_update 修复bug
 export ydtoken=cookie

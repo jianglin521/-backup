@@ -7,7 +7,7 @@ cron:0/3 * * * *
 抓包 https://promoa.ejiaofei.cn/ShaoXingLogin/VerifyUser 取出cookie，body下的参数
 """
 
-key = ""  # 企业微信推送 webhook 后面的 key
+key = ""  # 企业微信推送 webhook 后面的 key，为空则不推送
 
 range_num = 3500 #默认兑换积分高于3500
 

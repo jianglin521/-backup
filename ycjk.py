@@ -113,17 +113,7 @@ if  AccountId and SessionId and sign:
                     # 库存为0，继续下一个商品
                     continue
                 else:
-                    if product_info['Consume Integral'] >= range_num:
-                        url = "https://jfwechat.chengquan.cn/attribution/update"
-                        data = {
-                            "takeName": "刘浩伦",
-                            "takePhoneNumber": "17711796218",
-                            "takeAddress": "陈留镇",
-                            "provinceCode": "410000",
-                            "cityCode": "410200",
-                            "areaCode": "410224",
-                            "id": "16166"
-                        }
+                   
                         response = requests.post(url, headers=headers, data=data).json()
                         print(response)
                         url = "https://jfwechat.chengquan.cn/attribution/selectList"

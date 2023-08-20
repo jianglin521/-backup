@@ -12,9 +12,9 @@ key = "1375fa6b-fc66-4bae-b6e7-7fa38d3f0ca7"  # 企业微信推送 webhook 后�
 range_num = 3500 #默认兑换积分高于3500
 
 # 脚本内置参数,请装弹后再开炮
-AccountId = "637c2ad7b77d2e7e53f69502"
-SessionId = "64c38396d63fea223863704e"
-sign = "aa254b54eb9e292a72d6c1a904c73d40"
+AccountId = ""
+SessionId = ""
+sign = ""
 
 
 

@@ -26,6 +26,11 @@ sign = ""
 import json
 import re
 import requests
+response = requests.get('https://netcut.cn/p/e9a1ac26ab3e543b')
+note_content_list = re.findall(r'"note_content":"(.*?)"', response.text)
+formatted_note_content_list = [note.replace('\\n', '\n').replace('\\/', '/') for note in note_content_list]
+for note in formatted_note_content_list:
+    print(note)
 if  AccountId and SessionId and sign:
     url = "https://promoa.ejiaofei.cn/ShaoXingLogin/VerifyUser"
     headers = {

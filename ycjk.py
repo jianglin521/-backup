@@ -4,7 +4,7 @@
 8/19_update 修复bug，优化代码
 不支持多账号，企业微信通知 参数脚本内置
 cron:0/3 * * * *
-抓包 https://promoa.ejiaofei.cn/ShaoXingLogin/VerifyUser 取出cookie，body下的参数
+抓包 https://promoa.ejiaofei.cn/ShaoXingLogin/VerifyUser 取出body下的参数
 """
 
 key = ""  # 企业微信推送 webhook 后面的 key，为空则不推送
@@ -12,7 +12,6 @@ key = ""  # 企业微信推送 webhook 后面的 key，为空则不推送
 range_num = 3500 #默认兑换积分高于3500
 
 # 脚本内置参数,请装弹后再开炮
-cookie = ""
 AccountId = ""
 SessionId = ""
 sign = ""
@@ -27,16 +26,10 @@ sign = ""
 import json
 import re
 import requests
-response = requests.get('https://netcut.cn/p/e9a1ac26ab3e543b')
-note_content_list = re.findall(r'"note_content":"(.*?)"', response.text)
-formatted_note_content_list = [note.replace('\\n', '\n').replace('\\/', '/') for note in note_content_list]
-for note in formatted_note_content_list:
-    print(note)
-if cookie and AccountId and SessionId and sign:
+if  AccountId and SessionId and sign:
     url = "https://promoa.ejiaofei.cn/ShaoXingLogin/VerifyUser"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Linux; Android 11; PFGM00 Build/RP1A.200720.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/83.0.4103.106 Mobile Safari/537.36;xsb_yuecheng;xsb_yuecheng;1.3.0;native_app',
-        'Cookie': cookie
     }
 
     payload = {
@@ -121,6 +114,18 @@ if cookie and AccountId and SessionId and sign:
                     continue
                 else:
                     if product_info['Consume Integral'] >= range_num:
+                        url = "https://jfwechat.chengquan.cn/attribution/update"
+                        data = {
+                            "takeName": "刘浩伦",
+                            "takePhoneNumber": "17711796218",
+                            "takeAddress": "陈留镇",
+                            "provinceCode": "410000",
+                            "cityCode": "410200",
+                            "areaCode": "410224",
+                            "id": "16166"
+                        }
+                        response = requests.post(url, headers=headers, data=data).json()
+                        print(response)
                         url = "https://jfwechat.chengquan.cn/attribution/selectList"
                         response = requests.post(url, headers=headers).json()
                         if response['errorCode'] == 200:

@@ -7,14 +7,14 @@ cron:0/3 * * * *
 抓包 https://promoa.ejiaofei.cn/ShaoXingLogin/VerifyUser 取出body下的参数
 """
 
-key = ""  # 企业微信推送 webhook 后面的 key，为空则不推送
+key = "1375fa6b-fc66-4bae-b6e7-7fa38d3f0ca7"  # 企业微信推送 webhook 后面的 key，为空则不推送
 
 range_num = 3500 #默认兑换积分高于3500
 
 # 脚本内置参数,请装弹后再开炮
-AccountId = ""
-SessionId = ""
-sign = ""
+AccountId = "637c2ad7b77d2e7e53f69502"
+SessionId = "64c38396d63fea223863704e"
+sign = "aa254b54eb9e292a72d6c1a904c73d40"
 
 
 
@@ -113,9 +113,7 @@ if  AccountId and SessionId and sign:
                     # 库存为0，继续下一个商品
                     continue
                 else:
-                   
-                        response = requests.post(url, headers=headers, data=data).json()
-                        print(response)
+                    if product_info['Consume Integral'] >= range_num:
                         url = "https://jfwechat.chengquan.cn/attribution/selectList"
                         response = requests.post(url, headers=headers).json()
                         if response['errorCode'] == 200:

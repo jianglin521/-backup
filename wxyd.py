@@ -115,7 +115,7 @@ else:
                                 response = requests.get(url, headers=headers, json=data).json()
                                 if 'data' in response and 'link' in response['data']:
                                     link = response['data']['link']
-                                    print("以将该文章推送至微信--60s后继续运行")
+                                    print("以将该文章推送至微信请在60s内点击链接完成阅读--60s后继续运行")
 
                                     url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=' + key
 

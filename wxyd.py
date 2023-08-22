@@ -163,13 +163,13 @@ else:
                 except KeyError:
                     print(f"获取文章失败,错误未知{response}")
                     break
-        # print(f"============开始微信提现============")
-        # url = "http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
-        #
-        # response = requests.get(url, headers=headers, json=data).json()
-        # if response['code'] == 0:
-        #     print(response['message'])
-        # elif response['code'] == 1:
-        #     print(response['message'])
-        # else:
-        #     print(f"错误未知{response}")
+        print(f"============开始微信提现============")
+        url = "http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
+
+        response = requests.get(url, headers=headers, json=data).json()
+        if response['code'] == 0:
+            print(response['message'])
+        elif response['code'] == 1:
+            print(response['message'])
+        else:
+            print(f"错误未知{response}")

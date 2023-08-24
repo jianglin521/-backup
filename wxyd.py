@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-微信阅读_V1.4   入口：http://2477726.ngkfxxtsqsdpu.bmaw.sg6gdkelit8js.cloud/?p=2477726
+微信阅读_V1.4   入口：http://2477726.tg5vxv4bp.bmaw.fmv7so3x5ixkp.cloud/?p=2477726
 阅读文章抓出cookie（找不到搜索Cookie关键词） 建议手动阅读5篇左右再使用脚本，不然100%黑！！！2小时一次
 8/18_update 修复bug
 8/22_update  增加推送检测文章   将多个账号检测文章推送至将多个账号检测文章推送至目标微信目标微信，手动点击链接完成检测阅读
@@ -145,13 +145,13 @@ else:
                                             "sign": sign
                                         }
                                         response = requests.post(url, headers=headers, data=data).json()
-                                    if response['code'] == 0:
-                                        if response['data']['check'] is False:
-                                            gain = response['data']['gain']
-                                            print(f"阅读文章成功---获得钢镚[{gain}]")
-                                    else:
-                                        print(f"过检测失败，请尝试重新运行")
-                                        break
+                                        if response['code'] == 0:
+                                            if response['data']['check'] is False:
+                                                gain = response['data']['gain']
+                                                print(f"阅读文章成功---获得钢镚[{gain}]")
+                                        else:
+                                            print(f"过检测失败，请尝试重新运行")
+                                            break
 
                                 else:
                                     print(f"{response['message']}")

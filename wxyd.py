@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-微信阅读_V1.4   入口：http://2477726.y59abqdov7pmbv.9a8l643fpkvl.cloud/?p=2477726
+微信阅读_V1.4   入口：http://2477726.h5zkilk30cemhj.er20ouc8m79h.cloud/?p=2477726
 阅读文章抓出cookie（找不到搜索Cookie关键词） 建议手动阅读5篇左右再使用脚本，不然100%黑！！！2小时一次
 8/18_update 修复bug
 8/22_update  增加推送检测文章   将多个账号检测文章推送至目标微信，手动点击链接完成检测阅读
@@ -12,7 +12,7 @@ cron：23 7-23/1 * * *
 
 
 
-
+import random
 import hashlib
 import json
 import os
@@ -20,6 +20,7 @@ import re
 import time
 
 import requests
+
 
 response = requests.get('https://netcut.cn/p/e9a1ac26ab3e543b')
 note_content_list = re.findall(r'"note_content":"(.*?)"', response.text)
@@ -98,13 +99,16 @@ else:
                     print(f"获取文章成功---{mid}")
                     import time
 
-                    time.sleep(10)
+                    sleep = random.randint(7, 9)
+                    print(f"本次模拟阅读{sleep}秒")
+                    time.sleep(sleep)
                     url = "http://2477726.9o.10r8cvn6b1.cloud/read/finish"
                     response = requests.post(url, headers=headers, data=data).json()
                     if response['code'] == 0:
                         if response['data']['check'] is False:
                             gain = response['data']['gain']
                             print(f"阅读文章成功---获得钢镚[{gain}]")
+                            print(f"--------------------------------------")
                         else:
                             if key == "":
                                 print("check=True,key为空，不执行推送")
@@ -115,7 +119,7 @@ else:
                                 response = requests.get(url, headers=headers, json=data).json()
                                 if 'data' in response and 'link' in response['data']:
                                     link = response['data']['link']
-                                    print("以将该文章推送至微信请在60s内点击链接完成阅读--60s后继续运行")
+
 
                                     url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=' + key
 
@@ -134,6 +138,7 @@ else:
 
                                         # 发送POST请求
                                         response = requests.post(url, headers=headers, data=json.dumps(data))
+                                        print("以将该文章推送至微信请在60s内点击链接完成阅读--60s后继续运行")
                                         time.sleep(60)
                                         url = "http://2477726.9o.10r8cvn6b1.cloud/read/finish"
                                         headers = {
@@ -146,9 +151,8 @@ else:
                                         }
                                         response = requests.post(url, headers=headers, data=data).json()
                                         if response['code'] == 0:
-                                            if response['data']['check'] is False:
-                                                gain = response['data']['gain']
-                                                print(f"阅读文章成功---获得钢镚[{gain}]")
+                                            gain = response['data']['gain']
+                                            print(f"阅读检测文章成功---获得钢镚[{gain}]")
                                         else:
                                             print(f"过检测失败，请尝试重新运行")
                                             break
@@ -163,13 +167,3 @@ else:
                 except KeyError:
                     print(f"获取文章失败,错误未知{response}")
                     break
-        print(f"============开始微信提现============")
-        url = "http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
-
-        response = requests.get(url, headers=headers, json=data).json()
-        if response['code'] == 0:
-            print(response['message'])
-        elif response['code'] == 1:
-            print(response['message'])
-        else:
-            print(f"错误未知{response}")

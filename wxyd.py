@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-微信阅读_V1.5   入口：http://2477726.aeidm.p0w87d3xn9gp.cloud/?p=2477726
+微信阅读_V1.51   入口：http://2477726.aeidm.p0w87d3xn9gp.cloud/?p=2477726
 阅读文章抓出cookie（找不到搜索Cookie关键词） 建议手动阅读5篇左右再使用脚本，不然100%黑！！！2小时一次
 8/18_update 修复bug
 8/22_update  增加推送检测文章   将多个账号检测文章推送至目标微信，手动点击链接完成检测阅读
@@ -8,8 +8,9 @@
 key为企业微信webhook机器人后面的 key
 export ydtoken=cookie@key
 多账号用'===='隔开 例 账号1====账号2
-cron：23 7-23/1 * * *
+cron：23 7-23/3 * * *
 """
+
 
 
 import random
@@ -89,7 +90,11 @@ else:
             sign = sha256_hash.hexdigest()
             url = "http://2477726.9o.10r8cvn6b1.cloud/read/task"
 
-            response = requests.get(url, headers=headers, json=data).json()
+            try:
+                response = requests.get(url, headers=headers, json=data, timeout=7).json()
+            except requests.Timeout:
+                print("请求超时，尝试重新发送请求...")
+                response = requests.get(url, headers=headers, json=data, timeout=7).json()
             if response['code'] == 1:
                 print(response['message'])
                 break
@@ -130,7 +135,11 @@ else:
                                 "time": current_time,
                                 "sign": sign
                             }
-                            response = requests.post(url, headers=headers, data=data).json()
+                            try:
+                                response = requests.get(url, headers=headers, data=data, timeout=7).json()
+                            except requests.Timeout:
+                                print("请求超时，尝试重新发送请求...")
+                                response = requests.get(url, headers=headers, data=data, timeout=7).json()
                             if response['code'] == 0:
                                 gain = response['data']['gain']
                                 print(f"第{i+1}次阅读检测文章成功---获得钢镚[{gain}]")
@@ -151,7 +160,11 @@ else:
                             "time": current_time,
                             "sign": sign
                         }
-                        response = requests.post(url, headers=headers, data=data).json()
+                        try:
+                            response = requests.get(url, headers=headers, data=data, timeout=7).json()
+                        except requests.Timeout:
+                            print("请求超时，尝试重新发送请求...")
+                            response = requests.get(url, headers=headers, data=data, timeout=7).json()
                         if response['code'] == 0:
                             gain = response['data']['gain']
                             print(f"第{i+1}次阅读文章成功---获得钢镚[{gain}]")
@@ -159,7 +172,6 @@ else:
                         else:
                             print(f"阅读文章失败{response}")
                             break
-
                 except KeyError:
                     print(f"获取文章失败,错误未知{response}")
                     break

@@ -148,7 +148,7 @@ else:
                                 print(f"过检测失败，请尝试重新运行")
                                 break
                     else:
-                        sleep = random.randint(7, 9)
+                        sleep = random.randint(8, 11)
                         print(f"本次模拟阅读{sleep}秒")
                         time.sleep(sleep)
                         url = "http://2477726.9o.10r8cvn6b1.cloud/read/finish"

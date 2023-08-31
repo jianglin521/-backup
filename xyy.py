@@ -81,7 +81,7 @@ else:
                     'MzU0NzI5Mjc4OQ==',
                     'Mzg5MDgxODAzMg==',
                 ]
-                time.sleep(1.5)
+                time.sleep(2)
                 url = "http://1693441346.pgvv.top/yunonline/v1/wtmpdomain"
                 headers = {
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.40(0x18002831) NetType/WIFI Language/zh_CN",
@@ -92,7 +92,11 @@ else:
                     "unionid": xyy_uid
                 }
 
-                response = requests.post(url, headers=headers, data=data).json()
+                try:
+                    response = requests.post(url, headers=headers, data=data, timeout=7).json()
+                except requests.Timeout:
+                    print("请求超时，尝试重新发送请求...")
+                    response = requests.get(url, headers=headers, data=data, timeout=7).json()
 
                 if response['errcode'] == 0:
                     ukurl = response['data']['domain']
@@ -107,7 +111,11 @@ else:
                 params = {
                     "uk": uk
                 }
-                response = requests.get(url, headers=headers, params=params).json()
+                try:
+                    response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                except requests.Timeout:
+                    print("请求超时，尝试重新发送请求...")
+                    response = requests.get(url, headers=headers, params=params, timeout=7).json()
                 if response['errcode'] == 0:
                     link = response['data']['link'] + "?/"
                     response = requests.get(url=link, headers=headers).text
@@ -144,7 +152,11 @@ else:
                                 "time": sleep,
                                 "timestamp": current_timestamp
                             }
-                            response = requests.get(url, params=params, headers=headers).json()
+                            try:
+                                response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                            except requests.Timeout:
+                                print("请求超时，尝试重新发送请求...")
+                                response = requests.get(url, headers=headers, params=params, timeout=7).json()
                             if response['errcode'] == 0:
                                 gold = response['data']['gold']
                                 print(f"第{i + 1}次阅读检测文章成功---获得金币[{gold}]")
@@ -161,7 +173,11 @@ else:
                             "time": sleep,
                             "timestamp": current_timestamp
                         }
-                        response = requests.get(url, params=params, headers=headers).json()
+                        try:
+                            response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                        except requests.Timeout:
+                            print("请求超时，尝试重新发送请求...")
+                            response = requests.get(url, headers=headers, params=params, timeout=7).json()
                         if response['errcode'] == 0:
                             gold = response['data']['gold']
                             print(f"第{i + 1}次阅读文章成功---获得金币[{gold}]")
@@ -178,7 +194,6 @@ else:
                     break
             print(f"{'=' * 18}开始提现{'=' * 18}")
             url = "http://1693461882.sethlee.top/?cate=0"
-
 
             response = requests.get(url, headers=headers).text
             regex = r'request_id=([^\'"\s&]+)'

@@ -163,7 +163,7 @@ else:
                                 print(f"{'-' * 30}")
                             else:
                                 print(f"过检测失败，请尝试重新运行")
-                                break
+                                exit()
                     else:
                         print(f"本次模拟阅读{sleep}秒")
                         time.sleep(sleep)

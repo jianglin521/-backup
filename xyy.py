@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-小阅阅_V1.11   增加提现功能
+小阅阅_V1.1   增加提现功能
 入口：https://wi53263.nnju.top:10258/yunonline/v1/auth/a736aa79132badffc48e4b380f21c7ac?codeurl=wi53263.nnju.top:10258&codeuserid=2&time=1693450574
 抓包搜索关键词ysm_uid 取出ysm_uid的值即可
 
@@ -200,6 +200,27 @@ else:
             matches = re.search(regex, response)
 
             request_id = matches.group(1) if matches else None
+
+            url = 'http://1693441346.pgvv.top/yunonline/v1/gold'
+            params = {
+                'unionid': f'{xyy_uid}',
+                'time': current_timestamp
+            }
+            response = requests.get(url, headers=headers, params=params).json()
+            if response['errcode'] == 0:
+                last_gold = response['data']['last_gold']
+                gold = int(int(last_gold) / 1000) * 1000
+
+
+            url="http://1693462663.sethlee.top/yunonline/v1/user_gold"
+            data = {
+                "unionid": xyy_uid,
+                "request_id": request_id,
+                "gold": gold,
+            }
+            response = requests.post(url, headers=headers, data=data).json()
+            print(f"当前可提现{gold}")
+
             url = "http://1693462663.sethlee.top/yunonline/v1/withdraw"
             data = {
                 "unionid": xyy_uid,

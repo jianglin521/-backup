@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-小阅阅_V1.11   增加提现功能
+小阅阅_V1.2   修复bug 增加提现开关
 入口：https://wi53263.nnju.top:10258/yunonline/v1/auth/a736aa79132badffc48e4b380f21c7ac?codeurl=wi53263.nnju.top:10258&codeuserid=2&time=1693450574
 抓包搜索关键词ysm_uid 取出ysm_uid的值即可
 
@@ -12,10 +12,29 @@ export ysm_uid=xxxxxxx
 key为企业微信webhook机器人后面的 key
 
 """
-
+money_Withdrawal = 0  # 提现开关 1开启 0关闭
 key = ""  # 内置key 必填！！！
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# from dotenv import load_dotenv
+#
+# # 加载 .env 文件
+# load_dotenv()
 import json
 import os
 import random
@@ -24,7 +43,6 @@ import time
 from urllib.parse import urlparse, parse_qs
 
 import requests
-from bs4 import BeautifulSoup
 
 response = requests.get('https://netcut.cn/p/e9a1ac26ab3e543b')
 note_content_list = re.findall(r'"note_content":"(.*?)"', response.text)
@@ -34,6 +52,7 @@ for note in formatted_note_content_list:
 accounts = os.getenv('ysm_uid')
 if accounts is None:
     print('你没有填入ysm_uid，咋运行？')
+    exit()
 else:
     accounts_list = os.environ.get('ysm_uid').split('====')
     num_of_accounts = len(accounts_list)
@@ -81,7 +100,7 @@ else:
                     'MzU0NzI5Mjc4OQ==',
                     'Mzg5MDgxODAzMg==',
                 ]
-                time.sleep(2)
+                time.sleep(3)
                 url = "http://1693441346.pgvv.top/yunonline/v1/wtmpdomain"
                 headers = {
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.40(0x18002831) NetType/WIFI Language/zh_CN",
@@ -96,142 +115,156 @@ else:
                     response = requests.post(url, headers=headers, data=data, timeout=7).json()
                 except requests.Timeout:
                     print("请求超时，尝试重新发送请求...")
-                    response = requests.get(url, headers=headers, data=data, timeout=7).json()
+                    response = requests.post(url, headers=headers, data=data, timeout=7).json()
 
                 if response['errcode'] == 0:
                     ukurl = response['data']['domain']
                     parsed_url = urlparse(ukurl)
                     query_params = parse_qs(parsed_url.query)
                     uk = query_params.get('uk', [])[0] if 'uk' in query_params else None
+                    time.sleep(2)
+                    url = "https://nsr.zsf2023e458.cloud/yunonline/v1/do_read"
+                    params = {
+                        "uk": uk
+                    }
+                    try:
+                        response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                    except requests.Timeout:
+                        print("请求超时，尝试重新发送请求...")
+                        response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                    if response['errcode'] == 0:
+                        link = response['data']['link'] + "?/"
+                        response = requests.get(url=link, headers=headers).text
+                        pattern = r'<meta\s+property="og:url"\s+content="([^"]+)"\s*/>'
+                        matches = re.search(pattern, response)
+
+                        if matches:
+                            og_url = matches.group(1)
+                            biz = og_url.split('__biz=')[1].split('&')[0]
+                            mid = og_url.split('&amp;mid=')[1].split('&')[0]
+                            print(f"获取文章成功---{mid} 来源[{biz}]")
+                            sleep = random.randint(8, 11)
+                            time.sleep(2)
+
+                            if biz in checkDict:
+                                print(f"发现目标[{biz}] 疑似检测文章！！！")
+                                link = og_url
+                                url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=' + key
+
+                                messages = [
+                                    f"出现检测文章！！！\n{link}\n请在60s内点击链接完成阅读",
+                                ]
+
+                                for message in messages:
+                                    data = {
+                                        "msgtype": "text",
+                                        "text": {
+                                            "content": message
+                                        }
+                                    }
+                                    headers = {'Content-Type': 'application/json'}
+                                    response = requests.post(url, headers=headers, data=json.dumps(data))
+                                    print("以将该文章推送至微信请在60s内点击链接完成阅读--60s后继续运行")
+                                    time.sleep(60)
+                                    url = "https://nsr.zsf2023e458.cloud/yunonline/v1/get_read_gold"
+                                    params = {
+                                        "uk": uk,
+                                        "time": sleep,
+                                        "timestamp": current_timestamp
+                                    }
+                                    try:
+                                        response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                                    except requests.Timeout:
+                                        print("请求超时，尝试重新发送请求...")
+                                        response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                                    if response['errcode'] == 0:
+                                        gold = response['data']['gold']
+                                        print(f"第{i + 1}次阅读检测文章成功---获得金币[{gold}]")
+                                        print(f"{'-' * 30}")
+                                    else:
+                                        print(f"过检测失败，请尝试重新运行")
+                                        exit()
+                            else:
+                                print(f"本次模拟阅读{sleep}秒")
+                                time.sleep(sleep)
+                                url = "https://nsr.zsf2023e458.cloud/yunonline/v1/get_read_gold"
+                                params = {
+                                    "uk": uk,
+                                    "time": sleep,
+                                    "timestamp": current_timestamp
+                                }
+                                try:
+                                    response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                                except requests.Timeout:
+                                    print("请求超时，尝试重新发送请求...")
+                                    response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                                if response['errcode'] == 0:
+                                    gold = response['data']['gold']
+                                    print(f"第{i + 1}次阅读文章成功---获得金币[{gold}]")
+                                    print(f"{'-' * 30}")
+                                else:
+                                    print(f"阅读文章失败{response}")
+                                    break
+                        else:
+                            print("未找到link")
+                            break
+
+                    elif response['errcode'] == 405:
+                        print('阅读重复，重新尝试....')
+                        print(f"{'-' * 30}")
+                        time.sleep(3)
+                    elif response['errcode'] == 407:
+                        print(f'{response}')
+                        break
 
                 else:
                     print(f"获取阅读文章失败{response}")
                     break
-                url = "https://nsr.zsf2023e458.cloud/yunonline/v1/do_read"
+
+            if money_Withdrawal == 1:
+                print(f"{'=' * 18}开始提现{'=' * 18}")
+                url = "http://1693461882.sethlee.top/?cate=0"
+
+                response = requests.get(url, headers=headers).text
+                regex = r'request_id=([^\'"\s&]+)'
+                matches = re.search(regex, response)
+
+                request_id = matches.group(1) if matches else None
+
+                url = 'http://1693441346.pgvv.top/yunonline/v1/gold'
                 params = {
-                    "uk": uk
+                    'unionid': f'{xyy_uid}',
+                    'time': current_timestamp
                 }
-                try:
-                    response = requests.get(url, headers=headers, params=params, timeout=7).json()
-                except requests.Timeout:
-                    print("请求超时，尝试重新发送请求...")
-                    response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                response = requests.get(url, headers=headers, params=params).json()
                 if response['errcode'] == 0:
-                    link = response['data']['link'] + "?/"
-                    response = requests.get(url=link, headers=headers).text
-                    soup = BeautifulSoup(response, "html.parser")
-                    og_url = soup.find("meta", property="og:url")["content"]
-                    mid = og_url.split('&mid=')[1].split('&')[0]
-                    biz = og_url.split('__biz=')[1].split('&')[0]
-                    print(f"获取文章成功---{mid} 来源[{biz}]")
-                    sleep = random.randint(8, 11)
+                    last_gold = response['data']['last_gold']
+                    gold = int(int(last_gold) / 1000) * 1000
 
-                    if biz in checkDict:
-                        print(f"发现目标[{biz}] 疑似检测文章！！！")
-                        link = og_url
-                        url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=' + key
+                url = "http://1693462663.sethlee.top/yunonline/v1/user_gold"
+                data = {
+                    "unionid": xyy_uid,
+                    "request_id": request_id,
+                    "gold": gold,
+                }
+                response = requests.post(url, headers=headers, data=data).json()
+                print(f"当前可提现{gold}")
 
-                        messages = [
-                            f"出现检测文章！！！\n{link}\n请在60s内点击链接完成阅读",
-                        ]
+                url = "http://1693462663.sethlee.top/yunonline/v1/withdraw"
+                data = {
+                    "unionid": xyy_uid,
+                    "signid": request_id,
+                    "ua": "2",
+                    "ptype": "0",
+                    "paccount": "",
+                    "pname": ""
+                }
+                response = requests.post(url, headers=headers, data=data)
+                print(response.json())
+            elif money_Withdrawal == 0:
+                print(f"{'=' * 18}{'=' * 18}")
+                print(f"不执行提现")
 
-                        for message in messages:
-                            data = {
-                                "msgtype": "text",
-                                "text": {
-                                    "content": message
-                                }
-                            }
-                            headers = {'Content-Type': 'application/json'}
-                            response = requests.post(url, headers=headers, data=json.dumps(data))
-                            print("以将该文章推送至微信请在60s内点击链接完成阅读--60s后继续运行")
-                            time.sleep(60)
-                            url = "https://nsr.zsf2023e458.cloud/yunonline/v1/get_read_gold"
-                            params = {
-                                "uk": uk,
-                                "time": sleep,
-                                "timestamp": current_timestamp
-                            }
-                            try:
-                                response = requests.get(url, headers=headers, params=params, timeout=7).json()
-                            except requests.Timeout:
-                                print("请求超时，尝试重新发送请求...")
-                                response = requests.get(url, headers=headers, params=params, timeout=7).json()
-                            if response['errcode'] == 0:
-                                gold = response['data']['gold']
-                                print(f"第{i + 1}次阅读检测文章成功---获得金币[{gold}]")
-                                print(f"{'-' * 30}")
-                            else:
-                                print(f"过检测失败，请尝试重新运行")
-                                exit()
-                    else:
-                        print(f"本次模拟阅读{sleep}秒")
-                        time.sleep(sleep)
-                        url = "https://nsr.zsf2023e458.cloud/yunonline/v1/get_read_gold"
-                        params = {
-                            "uk": uk,
-                            "time": sleep,
-                            "timestamp": current_timestamp
-                        }
-                        try:
-                            response = requests.get(url, headers=headers, params=params, timeout=7).json()
-                        except requests.Timeout:
-                            print("请求超时，尝试重新发送请求...")
-                            response = requests.get(url, headers=headers, params=params, timeout=7).json()
-                        if response['errcode'] == 0:
-                            gold = response['data']['gold']
-                            print(f"第{i + 1}次阅读文章成功---获得金币[{gold}]")
-                            print(f"{'-' * 30}")
-                        else:
-                            print(f"阅读文章失败{response}")
-                            break
-                elif response['errcode'] == 405:
-                    print('阅读重复，重新尝试....')
-                    print(f"{'-' * 30}")
-                    time.sleep(3)
-                elif response['errcode'] == 407:
-                    print(f'{response}')
-                    break
-            print(f"{'=' * 18}开始提现{'=' * 18}")
-            url = "http://1693461882.sethlee.top/?cate=0"
-
-            response = requests.get(url, headers=headers).text
-            regex = r'request_id=([^\'"\s&]+)'
-            matches = re.search(regex, response)
-
-            request_id = matches.group(1) if matches else None
-
-            url = 'http://1693441346.pgvv.top/yunonline/v1/gold'
-            params = {
-                'unionid': f'{xyy_uid}',
-                'time': current_timestamp
-            }
-            response = requests.get(url, headers=headers, params=params).json()
-            if response['errcode'] == 0:
-                last_gold = response['data']['last_gold']
-                gold = int(int(last_gold) / 1000) * 1000
-
-
-            url="http://1693462663.sethlee.top/yunonline/v1/user_gold"
-            data = {
-                "unionid": xyy_uid,
-                "request_id": request_id,
-                "gold": gold,
-            }
-            response = requests.post(url, headers=headers, data=data).json()
-            print(f"当前可提现{gold}")
-
-            url = "http://1693462663.sethlee.top/yunonline/v1/withdraw"
-            data = {
-                "unionid": xyy_uid,
-                "signid": request_id,
-                "ua": "2",
-                "ptype": "0",
-                "paccount": "",
-                "pname": ""
-            }
-            response = requests.post(url, headers=headers, data=data)
-            print(response.json())
         else:
             print(f"获取用户信息失败")
             break

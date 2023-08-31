@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:.github/workflows/gx0123.yml
 name: gx0123-sync
+========
+name: qianmo8-sync
+>>>>>>>> 896a764f (修改任务):.github/workflows/qianmo8.yml
 on:
   schedule:
     - cron: '25 */6 * * *'
@@ -6,7 +10,11 @@ on:
   watch:
     types: started
   repository_dispatch:
+<<<<<<<< HEAD:.github/workflows/gx0123.yml
     types: sync-GithubSync
+========
+    types: sync-qianmo8-GithubSync
+>>>>>>>> 896a764f (修改任务):.github/workflows/qianmo8.yml
 jobs:
   repo-sync:
     env:
@@ -22,7 +30,13 @@ jobs:
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
+<<<<<<<< HEAD:.github/workflows/gx0123.yml
           source_repo: "https://github.com/gx0123/qinglongziyong.git"
           source_branch: "main"
           destination_branch: "gx0123"
+========
+          source_repo: "	https://github.com/qianmo8/au01.git"
+          source_branch: "main"
+          destination_branch: "qianmo8"
+>>>>>>>> 896a764f (修改任务):.github/workflows/qianmo8.yml
           github_token: ${{ secrets.PAT }}

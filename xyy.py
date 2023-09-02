@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-小阅阅_V1.2   修复bug 增加提现开关
+小阅阅_V1.21   修复bug 增加提现开关
 入口：https://wi53263.nnju.top:10258/yunonline/v1/auth/a736aa79132badffc48e4b380f21c7ac?codeurl=wi53263.nnju.top:10258&codeuserid=2&time=1693450574
 抓包搜索关键词ysm_uid 取出ysm_uid的值即可
 
@@ -12,7 +12,7 @@ export ysm_uid=xxxxxxx
 key为企业微信webhook机器人后面的 key
 
 """
-money_Withdrawal = 0  # 提现开关 1开启 0关闭
+money_Withdrawal = 1  # 提现开关 1开启 0关闭
 key = ""  # 内置key 必填！！！
 
 
@@ -84,7 +84,7 @@ else:
             remain_read = response['data']['remain_read']
             print(f'当前金币:{last_gold}\n今日阅读文章:{day_read} 剩余:{remain_read}')
             print(f"{'=' * 18}开始阅读文章{'=' * 18}")
-            for i in range(30):
+            for i in range(33):
                 checkDict = [
                     'MzkxNTE3MzQ4MQ==',
                     'Mzg5MjM0MDEwNw==',
@@ -100,7 +100,6 @@ else:
                     'MzU0NzI5Mjc4OQ==',
                     'Mzg5MDgxODAzMg==',
                 ]
-                time.sleep(3)
                 url = "http://1693441346.pgvv.top/yunonline/v1/wtmpdomain"
                 headers = {
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.40(0x18002831) NetType/WIFI Language/zh_CN",
@@ -122,7 +121,7 @@ else:
                     parsed_url = urlparse(ukurl)
                     query_params = parse_qs(parsed_url.query)
                     uk = query_params.get('uk', [])[0] if 'uk' in query_params else None
-                    time.sleep(2)
+                    time.sleep(1)
                     url = "https://nsr.zsf2023e458.cloud/yunonline/v1/do_read"
                     params = {
                         "uk": uk
@@ -139,13 +138,13 @@ else:
                         matches = re.search(pattern, response)
 
                         if matches:
-                            og_url = matches.group(1)
-                            biz = og_url.split('__biz=')[1].split('&')[0]
-                            mid = og_url.split('&amp;mid=')[1].split('&')[0]
-                            print(f"获取文章成功---{mid} 来源[{biz}]")
-                            sleep = random.randint(8, 11)
-                            time.sleep(2)
+                            fixed_url = matches.group(1)
+                            og_url = fixed_url.replace("amp;", "")
 
+                            biz = og_url.split('__biz=')[1].split('&')[0]
+                            mid = og_url.split('&mid=')[1].split('&')[0]
+                            print(f"获取文章成功---{mid} 来源[{biz}]")
+                            sleep = random.randint(8, 9)
                             if biz in checkDict:
                                 print(f"发现目标[{biz}] 疑似检测文章！！！")
                                 link = og_url
@@ -207,7 +206,6 @@ else:
                                     break
                         else:
                             print("未找到link")
-                            break
 
                     elif response['errcode'] == 405:
                         print('阅读重复，重新尝试....')

@@ -1,16 +1,21 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-钢镚阅读_V1.6    支持并发    入口：http://2477726.aeidm.p0w87d3xn9gp.cloud/?p=2477726
-阅读文章抓出cookie（找不到搜索Cookie关键词） 建议手动阅读5篇左右再使用脚本，不然100%黑！！！2小时一次
-
-key为企业微信webhook机器人后面的 key
-export ydtoken=cookie@key
+钢镚阅读阅读_V1.63   入口：http://2477726.aeidm.p0w87d3xn9gp.cloud/?p=2477726
+阅读文章抓出cookie（找不到搜索gfsessionid关键词）
+export ydtoken=cookie
 多账号用'===='隔开 例 账号1====账号2
 cron：23 7-23/3 * * *
 """
 
-# from dotenv import load_dotenv
-# load_dotenv()
+max_concurrency = 5  # 并发线程数
+money_Withdrawal = 0  # 提现开关 1开启 0关闭
+key = ""        #key为企业微信webhook机器人后面的 key
+
+
+
+
+
+
 
 
 import re
@@ -22,7 +27,7 @@ import random
 import threading
 import time
 from multiprocessing import Pool
-
+from multiprocessing.pool import ThreadPool
 import requests
 
 lock = threading.Lock()
@@ -30,7 +35,7 @@ lock = threading.Lock()
 
 def process_account(account, i):
     values = account.split('@')
-    cookie, key = values[0], values[1]
+    cookie = values[0]
 
     print(f"\n=======开始执行账号{i}=======")
     current_time = str(int(time.time()))
@@ -160,6 +165,19 @@ def process_account(account, i):
             except KeyError:
                 print(f"获取文章失败,错误未知{response}")
                 break
+    if money_Withdrawal == 1:
+        print(f"============开始微信提现============")
+        url = "http://2477726.84.8agakd6cqn.cloud/withdraw/wechat"
+
+        response = requests.get(url, headers=headers, json=data).json()
+        if response['code'] == 0:
+            print(response['message'])
+        elif response['code'] == 1:
+            print(response['message'])
+        else:
+            print(f"错误未知{response}")
+    elif money_Withdrawal == 0:
+        print(f"{'-' * 30}\n不执行提现")
 
 
 if __name__ == "__main__":
@@ -176,4 +194,5 @@ if __name__ == "__main__":
         num_of_accounts = len(accounts_list)
         print(f"获取到 {num_of_accounts} 个账号")
         with Pool(processes=num_of_accounts) as pool:
-            pool.starmap(process_account, [(account, i) for i, account in enumerate(accounts_list, start=1)])
+            thread_pool = ThreadPool(max_concurrency)
+            thread_pool.starmap(process_account, [(account, i) for i, account in enumerate(accounts_list, start=1)])

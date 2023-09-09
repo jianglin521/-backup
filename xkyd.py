@@ -124,7 +124,7 @@ def process_account(account, i):
                                     else:
                                         print('阅读已完成')
                                         print('-' * 50)
-                                        exit()
+                                        break
                                 else:
                                     print('提交任务异常异常')
 
@@ -145,7 +145,7 @@ def process_account(account, i):
                                 else:
                                     print('阅读已完成')
                                     print('-' * 50)
-                                    exit()
+                                    break
                             else:
                                 print('提交任务异常异常')
                     elif status == 30:

@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-星空阅读_V1.0  入口：http://mr1694245841257.uznmvev.cn/ox/index.html?mid=CS5WX5RSP
+星空阅读_V1.1  入口：http://mr1694245841257.uznmvev.cn/ox/index.html?mid=CS5WX5RSP
 抓包http://u.cocozx.cn/api/ox/info取出un token参数
 export xktoken=un@token
 多账号用'===='隔开 例 账号1====账号2
@@ -29,7 +29,8 @@ biz_list = ['Mzg2Mzk3Mjk5NQ==']
 
 
 
-
+# from dotenv import load_dotenv
+# load_dotenv()
 
 
 import json
@@ -121,15 +122,16 @@ def process_account(account, i):
                                     if progress > 0:
                                         print(f'本轮剩余{progress}篇文章，继续阅读')
                                         print('-' * 50)
+                                        time.sleep(2)
                                     else:
                                         print('阅读已完成')
                                         print('-' * 50)
                                         break
                                 else:
-                                    print('提交任务异常异常')
+                                    print('提交任务异常')
 
                         else:
-                            sleep = random.randint(6, 7)
+                            sleep = random.randint(7, 9)
                             print(f"本次模拟阅读{sleep}秒")
                             time.sleep(sleep)
                             url = "http://u.cocozx.cn/api/ox/submit"
@@ -142,16 +144,18 @@ def process_account(account, i):
                                 if progress > 0:
                                     print(f'本轮剩余{progress}篇文章，继续阅读')
                                     print('-' * 50)
+                                    time.sleep(2)
                                 else:
                                     print('阅读已完成')
                                     print('-' * 50)
                                     break
                             else:
-                                print('提交任务异常异常')
+                                print('提交任务异常')
                     elif status == 30:
-                        print('未知情况')
+                        print(f'未知情况{response}')
                     elif status == 50 or status == 80:
                         print('您的阅读暂时失效，请明天再来')
+                        break
                     else:
                         print('本次推荐文章已全部读完')
                         break
@@ -184,7 +188,6 @@ def process_account(account, i):
                 print(f"{'-' * 30}\n不执行提现")
         else:
             print(f"{response}")
-            exit()
 
     else:
         print(f"获取账号信息失败{response}")

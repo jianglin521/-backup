@@ -21,7 +21,8 @@ import requests
 
 # 获取 xwytoken 环境变量值
 accounts = os.getenv('xwytoken')
-
+response = requests.get('https://gitee.com/shallow-a/qim9898/raw/master/label.txt').text
+print(response)
 # 检查 xwytoken 是否存在
 if accounts is None:
     print('你没有填入xwytoken，咋运行？')

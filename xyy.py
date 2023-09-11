@@ -251,15 +251,12 @@ def process_account(account, i):
 
 if __name__ == "__main__":
     accounts = os.getenv('ysm_uid')
+    response = requests.get('https://gitee.com/shallow-a/qim9898/raw/master/label.txt').text
+    print(response)
     if accounts is None:
         print('你没有填入ysm_uid，咋运行？')
         exit()
     else:
-        response = requests.get('https://netcut.cn/p/e9a1ac26ab3e543b')
-        note_content_list = re.findall(r'"note_content":"(.*?)"', response.text)
-        formatted_note_content_list = [note.replace('\\n', '\n').replace('\\/', '/') for note in note_content_list]
-        for note in formatted_note_content_list:
-            print(note)
         accounts_list = os.environ.get('ysm_uid').split('====')
         num_of_accounts = len(accounts_list)
         print(f"获取到 {num_of_accounts} 个账号")

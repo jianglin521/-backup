@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-小阅阅_V1.31
+小阅阅_V1.32
 入口：https://wi53263.nnju.top:10258/yunonline/v1/auth/a736aa79132badffc48e4b380f21c7ac?codeurl=wi53263.nnju.top:10258&codeuserid=2&time=1693450574
 抓包搜索关键词ysm_uid 取出ysm_uid的值即可
 
@@ -10,15 +10,6 @@ export ysm_uid=xxxxxxx
 money_Withdrawal = 0  # 提现开关 1开启 0关闭
 max_concurrency = 2  # 设置要运行的线程数
 key = ""  # 内置key 必填！！！ key为企业微信webhook机器人后面的 key
-
-
-
-
-
-
-
-
-
 
 
 
@@ -83,6 +74,8 @@ def process_account(account, i):
             ]
             url = "http://1693441346.pgvv.top/yunonline/v1/wtmpdomain"
             headers = {
+                "Host": "nsr.zsf2023e458.cloud",
+                "Origin": "https://b1694491023-1304258503.cos.ap-beijing.myqcloud.com",
                 "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.40(0x18002831) NetType/WIFI Language/zh_CN",
                 "Cookie": f"ejectCode=1; ysm_uid={xyy_uid}"
             }
@@ -114,7 +107,11 @@ def process_account(account, i):
                     response = requests.get(url, headers=headers, params=params, timeout=7).json()
                 if response['errcode'] == 0:
                     link = response['data']['link'] + "?/"
-                    response = requests.get(url=link, headers=headers).text
+                    headers_link = {
+                        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.40(0x18002831) NetType/WIFI Language/zh_CN",
+                        "Cookie": f"ejectCode=1; ysm_uid={xyy_uid}"
+                    }
+                    response = requests.get(url=link, headers=headers_link).text
                     pattern = r'<meta\s+property="og:url"\s+content="([^"]+)"\s*/>'
                     matches = re.search(pattern, response)
 
@@ -142,8 +139,8 @@ def process_account(account, i):
                                         "content": message
                                     }
                                 }
-                                headers = {'Content-Type': 'application/json'}
-                                response = requests.post(url, headers=headers, data=json.dumps(data))
+                                headers_bot = {'Content-Type': 'application/json'}
+                                response = requests.post(url, headers=headers_bot, data=json.dumps(data))
                                 print("以将该文章推送至微信请在60s内点击链接完成阅读--60s后继续运行")
                                 time.sleep(60)
                                 url = "https://nsr.zsf2023e458.cloud/yunonline/v1/get_read_gold"

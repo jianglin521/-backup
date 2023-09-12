@@ -7,8 +7,8 @@ export xktoken=un@token
 cron：23 7-23/2 * * *
 """
 
-max_concurrency = 5  # 并发线程数
-money_Withdrawal = 1  # 提现开关 1开启 0关闭
+max_concurrency = 1  # 并发线程数
+money_Withdrawal = 0  # 提现开关 1开启 0关闭
 key = ""  # key为企业微信webhook机器人后面的 key
 
 # 检测文章列表
@@ -27,16 +27,14 @@ biz_list = ['Mzg2Mzk3Mjk5NQ==']
 
 
 
-
-
+# 
 # from dotenv import load_dotenv
+# 
 # load_dotenv()
-
 
 import json
 import os
 import random
-import re
 import threading
 import time
 from multiprocessing import Pool
@@ -45,7 +43,6 @@ from multiprocessing.pool import ThreadPool
 import requests
 
 lock = threading.Lock()
-
 
 
 def process_account(account, i):
@@ -196,18 +193,14 @@ def process_account(account, i):
 
 if __name__ == "__main__":
     accounts = os.getenv('xktoken')
+    response = requests.get('https://gitee.com/shallow-a/qim9898/raw/master/label.txt').text
+    print(response)
     if accounts is None:
         print('你没有填入xktoken，咋运行？')
     else:
-        response = requests.get('https://netcut.cn/p/e9a1ac26ab3e543b')
-        note_content_list = re.findall(r'"note_content":"(.*?)"', response.text)
-        formatted_note_content_list = [note.replace('\\n', '\n').replace('\\/', '/') for note in note_content_list]
-        for note in formatted_note_content_list:
-            print(note)
         accounts_list = os.environ.get('xktoken').split('====')
         num_of_accounts = len(accounts_list)
         print(f"获取到 {num_of_accounts} 个账号")
         with Pool(processes=num_of_accounts) as pool:
             thread_pool = ThreadPool(max_concurrency)
             thread_pool.starmap(process_account, [(account, i) for i, account in enumerate(accounts_list, start=1)])
-

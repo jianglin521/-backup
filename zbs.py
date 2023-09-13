@@ -12,9 +12,7 @@ corn：0 0 8 * * ?
 import os
 
 import requests
-from dotenv import load_dotenv
 
-load_dotenv()
 accounts = os.getenv('zbstoken')
 response = requests.get('https://gitee.com/shallow-a/qim9898/raw/master/label.txt').text
 print(response)

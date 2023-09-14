@@ -8,9 +8,8 @@ export ysm_uid=xxxxxxx
 多账号用'===='隔开 例 账号1====账号2
 """
 money_Withdrawal = 0  # 提现开关 1开启 0关闭
-max_concurrency = 2  # 设置要运行的线程数
+max_concurrency = 3  # 设置要运行的线程数
 key = ""  # 内置key 必填！！！ key为企业微信webhook机器人后面的 key
-
 
 
 
@@ -74,8 +73,6 @@ def process_account(account, i):
             ]
             url = "http://1693441346.pgvv.top/yunonline/v1/wtmpdomain"
             headers = {
-                "Host": "nsr.zsf2023e458.cloud",
-                "Origin": "https://b1694491023-1304258503.cos.ap-beijing.myqcloud.com",
                 "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.40(0x18002831) NetType/WIFI Language/zh_CN",
                 "Cookie": f"ejectCode=1; ysm_uid={xyy_uid}"
             }

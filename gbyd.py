@@ -1,14 +1,14 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-钢镚阅读阅读_V1.63   入口：http://2477726.bqrt3qmixzp9.feo431f5ks0yn.cloud/?p=2477726
-阅读文章抓出cookie（找不到搜索gfsessionid关键词）
+钢镚阅读阅读_V1.64   入口：http://2477726.bqrt3qmixzp9.feo431f5ks0yn.cloud/?p=2477726
+阅读文章抓出cookie（找不到搜索gfsessionid关键词） 个别填入gfsessionid=XXX参数也能正常运行
 export ydtoken=cookie
 多账号用'===='隔开 例 账号1====账号2
 cron：23 7-23/3 * * *
 """
 
 max_concurrency = 5  # 并发线程数
-money_Withdrawal = 0  # 提现开关 1开启 0关闭
+money_Withdrawal = 1  # 提现开关 1开启 0关闭
 key = ""        #key为企业微信webhook机器人后面的 key
 
 

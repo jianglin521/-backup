@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-钢镚阅读阅读_V1.63   入口：http://2477726.lk.gbl.zn93ff8jyqd4.cloud/?p=2477726
+钢镚阅读阅读_V1.63   入口：http://2477726.re746vu.tqbbxaznktqbf.cloud/?p=2477726
 阅读文章抓出cookie（找不到搜索gfsessionid关键词）
 export ydtoken=cookie
 多账号用'===='隔开 例 账号1====账号2

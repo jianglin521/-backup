@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-钢镚阅读阅读_V1.63   入口：http://2477726.re746vu.tqbbxaznktqbf.cloud/?p=2477726
+钢镚阅读阅读_V1.63   入口：http://2477726.bqrt3qmixzp9.feo431f5ks0yn.cloud/?p=2477726
 阅读文章抓出cookie（找不到搜索gfsessionid关键词）
 export ydtoken=cookie
 多账号用'===='隔开 例 账号1====账号2
@@ -135,7 +135,7 @@ def process_account(account, i):
                             print(f"第{j + 1}次阅读检测文章成功---获得钢镚[{gain}]")
                             print(f"--------------------------------")
                         else:
-                            print(f"过检测失败，请尝试重新运行")
+                            print(f"阅读检测文章异常，请尝试重新运行")
                             break
                 else:
                     sleep = random.randint(8, 11)

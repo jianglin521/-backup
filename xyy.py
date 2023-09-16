@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-小阅阅_V1.33
+小阅阅_V1.4
 入口：https://wi53263.nnju.top:10258/yunonline/v1/auth/a736aa79132badffc48e4b380f21c7ac?codeurl=wi53263.nnju.top:10258&codeuserid=2&time=1693450574
 抓包搜索关键词ysm_uid 取出ysm_uid的值即可
 
@@ -8,10 +8,8 @@ export ysm_uid=xxxxxxx
 多账号用'===='隔开 例 账号1====账号2
 """
 money_Withdrawal = 0  # 提现开关 1开启 0关闭
-max_concurrency = 3  # 设置要运行的线程数
+max_concurrency = 3  # 设置要运行的线程数(建议3线程)
 key = ""  # 内置key 必填！！！ key为企业微信webhook机器人后面的 key
-
-
 
 import json
 import os
@@ -22,11 +20,11 @@ import time
 from multiprocessing import Pool
 from multiprocessing.pool import ThreadPool
 from urllib.parse import urlparse, parse_qs
-
+from requests.exceptions import ConnectionError, Timeout
 import requests
 
 lock = threading.Lock()
-
+max_retries = 3
 
 def process_account(account, i):
     values = account.split('@')
@@ -80,13 +78,20 @@ def process_account(account, i):
             data = {
                 "unionid": xyy_uid
             }
-
-            try:
-                response = requests.post(url, headers=headers, data=data, timeout=7).json()
-            except requests.Timeout:
-                print("请求超时，尝试重新发送请求...")
-                response = requests.post(url, headers=headers, data=data, timeout=7).json()
-
+            for retry in range(max_retries):
+                try:
+                    response = requests.post(url, headers=headers, data=data, timeout=7).json()
+                    break
+                except (ConnectionError, Timeout):
+                    if retry < max_retries - 1:
+                        continue
+                    else:
+                        print("异常退出")
+                        break
+                except Exception as e:
+                    print(e)
+                    print("状态异常，尝试重新发送请求...")
+                    response = requests.post(url, headers=headers, data=data, timeout=7).json()
             if response['errcode'] == 0:
                 ukurl = response['data']['domain']
                 parsed_url = urlparse(ukurl)
@@ -97,11 +102,20 @@ def process_account(account, i):
                 params = {
                     "uk": uk
                 }
-                try:
-                    response = requests.get(url, headers=headers, params=params, timeout=7).json()
-                except requests.Timeout:
-                    print("请求超时，尝试重新发送请求...")
-                    response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                for retry in range(max_retries):
+                    try:
+                        response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                        break
+                    except (ConnectionError, Timeout):
+                        if retry < max_retries - 1:
+                            continue
+                        else:
+                            print("异常退出")
+                            break
+                    except Exception as e:
+                        print(e)
+                        print("状态异常，尝试重新发送请求...")
+                        response = requests.get(url, headers=headers, params=params, timeout=7).json()
                 if response['errcode'] == 0:
                     link = response['data']['link'] + "?/"
                     headers_link = {
@@ -146,11 +160,19 @@ def process_account(account, i):
                                     "time": sleep,
                                     "timestamp": current_timestamp
                                 }
-                                try:
-                                    response = requests.get(url, headers=headers, params=params, timeout=7).json()
-                                except requests.Timeout:
-                                    print("请求超时，尝试重新发送请求...")
-                                    response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                                for retry in range(max_retries):
+                                    try:
+                                        response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                                        break
+                                    except (ConnectionError, Timeout):
+                                        if retry < max_retries - 1:
+                                            continue
+                                        else:
+                                            print("异常退出")
+                                            break
+                                    except Exception as e:
+                                        print('设置状态异常')
+                                        print(e)
                                 if response['errcode'] == 0:
                                     gold = response['data']['gold']
                                     print(f"第{i + 1}次阅读检测文章成功---获得金币[{gold}]")
@@ -167,11 +189,19 @@ def process_account(account, i):
                                 "time": sleep,
                                 "timestamp": current_timestamp
                             }
-                            try:
-                                response = requests.get(url, headers=headers, params=params, timeout=7).json()
-                            except requests.Timeout:
-                                print("请求超时，尝试重新发送请求...")
-                                response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                            for retry in range(max_retries):
+                                try:
+                                    response = requests.get(url, headers=headers, params=params, timeout=7).json()
+                                    break
+                                except (ConnectionError, Timeout):
+                                    if retry < max_retries - 1:
+                                        continue
+                                    else:
+                                        print("异常退出")
+                                        break
+                                except Exception as e:
+                                    print('设置状态异常')
+                                    print(e)
                             if response['errcode'] == 0:
                                 gold = response['data']['gold']
                                 print(f"第{i + 1}次阅读文章成功---获得金币[{gold}]")
@@ -237,7 +267,6 @@ def process_account(account, i):
         elif money_Withdrawal == 0:
             print(f"{'=' * 18}{'=' * 18}")
             print(f"不执行提现")
-
     else:
         print(f"获取用户信息失败")
         exit()

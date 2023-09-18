@@ -140,7 +140,7 @@ for i, account in enumerate(accounts_list, start=1):
                     "box_id": "303",
                     "paytype": "1",
                     "answer": "",
-                    "num": num
+                    "num": 1
                 }
                 response = requests.post(url, headers=headers, data=params).json()
                 if response['errno'] == 0:

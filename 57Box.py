@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-57Box_V0.1
+57Box_0.1
 微信小程序  57Box   玩法：完成基础任务抽免费箱子
 登录微信小程序授权手机号然后下载APP设置密码
 export BOX_data=手机号@密码
@@ -23,7 +23,6 @@ import requests
 #
 # load_dotenv()
 accounts = os.getenv("BOX_data")
-QimKEY = os.getenv("QimKEY")
 response = requests.get('https://gitee.com/shallow-a/qim9898/raw/master/label.txt').text
 print(response)
 if accounts is None:
@@ -125,41 +124,35 @@ for i, account in enumerate(accounts_list, start=1):
             break
         if lottery == 1:  # 开始抽奖
             print(f"{'=' * 12}执行开鞋盒{'=' * 12}")
-            num = 0
-            if 120 <= integral < 240:
-                num = 1
-            elif 360 <= integral < 600:
-                num = 3
-            elif 600 <= integral < 601:
-                num = 5
-            else:
-                num = 5
-            url = "https://www.57box.cn/app/index.php"
-            params = {
-                "i": "2",
-                "t": "0",
-                "v": "1",
-                "from": "wxapp",
-                "c": "entry",
-                "a": "wxapp",
-                "do": "openthebox",
-                "token": token,
-                "m": "greatriver_lottery_operation",
-                "box_id": "303",
-                "paytype": "1",
-                "answer": "",
-                "num": num
-            }
-            response = requests.post(url, headers=headers, data=params).json()
-            if response['errno'] == 0:
-                complete_prize_title = response['data']['prizes_data'][0]['complete_prize_title']
-                prize_market_price = response['data']['prizes_data'][0]['prize_market_price']
-                print(f"{response['message']}---{complete_prize_title}  市场价:{prize_market_price}")
-            elif response['errno'] == 999:
-                print(f"{response['message']}")
-            else:
-                print(f"错误未知{response}")
-                break
+            num = integral // 120
+            for i in range(num):
+                url = "https://www.57box.cn/app/index.php"
+                params = {
+                    "i": "2",
+                    "t": "0",
+                    "v": "1",
+                    "from": "wxapp",
+                    "c": "entry",
+                    "a": "wxapp",
+                    "do": "openthebox",
+                    "token": token,
+                    "m": "greatriver_lottery_operation",
+                    "box_id": "303",
+                    "paytype": "1",
+                    "answer": "",
+                    "num": num
+                }
+                response = requests.post(url, headers=headers, data=params).json()
+                if response['errno'] == 0:
+                    complete_prize_title = response['data']['prizes_data'][0]['complete_prize_title']
+                    prize_market_price = response['data']['prizes_data'][0]['prize_market_price']
+                    print(f"{response['message']}---{complete_prize_title}  市场价:{prize_market_price}")
+                elif response['errno'] == 999:
+                    print(f"{response['message']}")
+                else:
+                    print(f"错误未知{response}")
+                    break
+            print(f"开鞋盒完毕")
         elif lottery == 0:
             print(f"{'=' * 12}不执行开鞋盒{'=' * 12}")
     elif response['errno'] == 999:

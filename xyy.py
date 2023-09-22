@@ -1,8 +1,8 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-小阅阅_V1.41
+小阅阅_V1.34
 入口：https://wi53263.nnju.top:10258/yunonline/v1/auth/a736aa79132badffc48e4b380f21c7ac?codeurl=wi53263.nnju.top:10258&codeuserid=2&time=1693450574
-抓包搜索关键词ysm_uid 取出ysm_uid的值即可！
+抓包搜索关键词ysm_uid 取出ysm_uid的值即可
 
 export ysm_uid=xxxxxxx
 多账号用'===='隔开 例 账号1====账号2
@@ -12,9 +12,9 @@ max_concurrency = 1  # 设置要运行的线程数
 key = ""  # 内置key 必填！！！ key为企业微信webhook机器人后面的 key
 
 
-# 
+#
 # from dotenv import load_dotenv
-# 
+#
 # load_dotenv()
 import json
 import os
@@ -236,6 +236,10 @@ def process_account(account, i):
                 break
 
         if money_Withdrawal == 1:
+            headers = {
+                "Cookie": f"ejectCode=1; ysm_uid={xyy_uid}",
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a25) NetType/WIFI Language/zh_CN",
+            }
             print(f"{'=' * 18}开始提现{'=' * 18}")
             url = "http://1693461882.sethlee.top/?cate=0"
 
@@ -265,6 +269,7 @@ def process_account(account, i):
             print(f"当前可提现{gold}")
 
             url = "http://1693462663.sethlee.top/yunonline/v1/withdraw"
+
             data = {
                 "unionid": xyy_uid,
                 "signid": request_id,

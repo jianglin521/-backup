@@ -1,16 +1,21 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-小阅阅_V1.4
+小阅阅_V1.41
 入口：https://wi53263.nnju.top:10258/yunonline/v1/auth/a736aa79132badffc48e4b380f21c7ac?codeurl=wi53263.nnju.top:10258&codeuserid=2&time=1693450574
 抓包搜索关键词ysm_uid 取出ysm_uid的值即可
 
 export ysm_uid=xxxxxxx
 多账号用'===='隔开 例 账号1====账号2
 """
-money_Withdrawal = 0  # 提现开关 1开启 0关闭
-max_concurrency = 3  # 设置要运行的线程数(建议3线程)
+money_Withdrawal = 1  # 提现开关 1开启 0关闭
+max_concurrency = 1  # 设置要运行的线程数
 key = ""  # 内置key 必填！！！ key为企业微信webhook机器人后面的 key
 
+
+# 
+# from dotenv import load_dotenv
+# 
+# load_dotenv()
 import json
 import os
 import random
@@ -90,7 +95,7 @@ def process_account(account, i):
                         break
                 except Exception as e:
                     print(e)
-                    print("状态异常，尝试重新发送请求...")
+                    print("状态1异常，尝试重新发送请求...")
                     response = requests.post(url, headers=headers, data=data, timeout=7).json()
             if response['errcode'] == 0:
                 ukurl = response['data']['domain']
@@ -99,6 +104,12 @@ def process_account(account, i):
                 uk = query_params.get('uk', [])[0] if 'uk' in query_params else None
                 time.sleep(1)
                 url = "https://nsr.zsf2023e458.cloud/yunonline/v1/do_read"
+                headers = {
+                    "Origin": "https://d1695359179-1258867400.cos.ap-beijing.myqcloud.com",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a25) NetType/WIFI Language/zh_CN",
+                    "Accept-Language": "zh-CN,zh-Hans;q=0.9",
+                    "Accept-Encoding": "gzip, deflate, br"
+                }
                 params = {
                     "uk": uk
                 }
@@ -114,7 +125,7 @@ def process_account(account, i):
                             break
                     except Exception as e:
                         print(e)
-                        print("状态异常，尝试重新发送请求...")
+                        print("状态2异常，尝试重新发送请求...")
                         response = requests.get(url, headers=headers, params=params, timeout=7).json()
                 if response['errcode'] == 0:
                     link = response['data']['link'] + "?/"

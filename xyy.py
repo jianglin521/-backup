@@ -13,9 +13,7 @@ key = ""  # 内置key 必填！！！ key为企业微信webhook机器人后面�
 
 
 #
-from dotenv import load_dotenv
 
-load_dotenv()
 import json
 import os
 import random

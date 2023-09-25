@@ -4,9 +4,12 @@
 抓包 admin.dtds888.com 取出请求体里面的token
 export qztoken=token@微信实名名字
 多账号用'===='隔开 例 账号1====账号2
-cron：0 2 1 * * ? 
+cron：0 2 1 * * ?
 """
-
+# 
+# from dotenv import load_dotenv
+# 
+# load_dotenv()
 
 import os
 import requests
@@ -45,7 +48,7 @@ else:
             url = "https://admin.dtds888.com/api/index/user/SignIn"
             response = requests.post(url, headers, params=data).json()
             if response['code'] == 1:
-                print(f"{response['msg']},获得{data}元")
+                print(f"{response['msg']},获得{response['data']}元")
             elif response['code'] == 0:
                 print(f"{response['msg']}")
             else:
@@ -70,7 +73,7 @@ else:
             response = requests.post(url, headers=headers, json=data).json()
             if money >= 1:
                 response = requests.post(url, headers=headers, json=data)
-                msg = response.json()['msg']
+                msg = response.json()
                 print(msg)
             else:
                 print(f"钱包余额不足,跳过提现")

@@ -70,7 +70,6 @@ else:
                 'token': token,
                 'version': '1.00'
             }
-            response = requests.post(url, headers=headers, json=data).json()
             if money >= 1:
                 response = requests.post(url, headers=headers, json=data)
                 msg = response.json()

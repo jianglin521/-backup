@@ -77,7 +77,7 @@ def process_account(account, i):
         remain_read = res['data']['remain_read']
         print(f'当前金币:{last_gold}\n今日阅读文章:{day_read} 剩余:{remain_read}')
         print(f"{'=' * 18}开始阅读文章{'=' * 18}")
-        for i in range(1):
+        for i in range(30):
             checkDict = [
                 'MzkxNTE3MzQ4MQ==',
                 'Mzg5MjM0MDEwNw==',

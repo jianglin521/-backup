@@ -16,7 +16,7 @@ import time
 
 
 accounts = os.getenv('nhytoken')
-response = requests.get('https://gitee.com/shallow-a/qim9898/raw/master/label.txt').text
+response = requests.get('https://gh.con.sh/https://raw.githubusercontent.com/Qim979/zz97/main/Script.txt').text
 print(response)
 if accounts is None:
     print('你没有填入nhytoken，咋运行？')

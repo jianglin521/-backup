@@ -71,7 +71,7 @@ for i, account in enumerate(accounts_list, start=1):
         data = {
             "m": "greatriver_lottery_operation",
             "id": "26",
-            "answer": "228899"
+            "answer": "669988"
         }
         response = requests.post(url, headers=headers, data=data).json()
         state = "进群密码"

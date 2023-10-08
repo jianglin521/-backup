@@ -18,8 +18,7 @@ import requests
 #
 # load_dotenv()
 accounts = os.getenv("BOX_data")
-response = requests.get('https://gitee.com/shallow-a/qim9898/raw/master/label.txt').text
-print(response)
+print(requests.get("http://1.94.61.34:50/index.txt").content.decode("utf-8"))
 if accounts is None:
     print('你没有填入BOX_data，咋运行？')
     exit()

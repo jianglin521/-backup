@@ -17,7 +17,7 @@ cron： 0 8 * * *
 """
 
 lottery = 1  # 抽盒开关 1开启 0关闭
-box_id = 357  #箱子id
+box_id = 303  #箱子id
 import os
 import time
 

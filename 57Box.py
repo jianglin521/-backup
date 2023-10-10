@@ -1,15 +1,23 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-57Box_0.2
+57Box_0.3
 微信小程序  57Box   玩法：完成基础任务抽免费箱子
 登录微信小程序授权手机号然后下载APP设置密码
 export BOX_data=手机号@密码
 多账号用'===='隔开 例 账号1====账号2
 cron： 0 8 * * *
+
+免费矿石箱     id  303    120矿石
+泡面搭档       id  357    199矿石
+饮料盒子       id  361    199矿石
+无糖茶饮       id  402    240矿石
+精酿啤酒       id  379    320矿石
+全是主食       id  314    399矿石
+
 """
 
-lottery = 1  # 抽鞋盒开关 1开启 0关闭
-
+lottery = 1  # 抽盒开关 1开启 0关闭
+box_id = 357  #箱子id
 import os
 import time
 
@@ -70,7 +78,7 @@ for i, account in enumerate(accounts_list, start=1):
         data = {
             "m": "greatriver_lottery_operation",
             "id": "26",
-            "answer": "669988"
+            "answer": "228899"
         }
         response = requests.post(url, headers=headers, data=data).json()
         state = "进群密码"
@@ -117,9 +125,8 @@ for i, account in enumerate(accounts_list, start=1):
             print(f"错误未知{response}")
             break
         if lottery == 1:  # 开始抽奖
-            print(f"{'=' * 12}执行开鞋盒{'=' * 12}")
-            num = integral // 120
-            for i in range(num):
+            print(f"{'=' * 12}执行开盒{'=' * 12}")
+            for i in range(10):
                 url = "https://www.57box.cn/app/index.php"
                 params = {
                     "i": "2",
@@ -131,7 +138,7 @@ for i, account in enumerate(accounts_list, start=1):
                     "do": "openthebox",
                     "token": token,
                     "m": "greatriver_lottery_operation",
-                    "box_id": "303",
+                    "box_id": box_id,
                     "paytype": "1",
                     "answer": "",
                     "num": 1
@@ -143,31 +150,30 @@ for i, account in enumerate(accounts_list, start=1):
                     print(f"{response['message']}---{complete_prize_title}  市场价:{prize_market_price}")
                 elif response['errno'] == 999:
                     print(f"{response['message']}")
+                    break
                 else:
                     print(f"错误未知{response}")
                     break
-            print(f"开鞋盒完毕")
-            if num >= 1:
-                url = f"https://www.57box.cn/app/index.php?i=2&t=0&v=1&from=wxapp&c=entry&a=wxapp&do=uptaskinfo&&token={token}"
-                data = {
-                    "m": "greatriver_lottery_operation",
-                    "id": "39",
-                    "answer": ""
-                }
-                response = requests.post(url, headers=headers, data=data).json()
-                state = "开盒看视频领矿石"
-                if response['errno'] == 999:
-                    print(f"{state}---{response['message']}")
-                elif response['errno'] == 0:
-                    print(f"{state}---{response['message']}")
-                else:
-                    print(f"{state}错误未知{response}")
-                    break
+            print(f"开盒完毕")
+            url = f"https://www.57box.cn/app/index.php?i=2&t=0&v=1&from=wxapp&c=entry&a=wxapp&do=uptaskinfo&&token={token}"
+            data = {
+                "m": "greatriver_lottery_operation",
+                "id": "39",
+                "answer": ""
+            }
+            response = requests.post(url, headers=headers, data=data).json()
+            state = "开盒看视频领矿石"
+            if response['errno'] == 999:
+                print(f"{state}---{response['message']}")
+            elif response['errno'] == 0:
+                print(f"{state}---{response['message']}")
             else:
-                print()
+                print(f"{state}错误未知{response}")
+                break
 
         elif lottery == 0:
             print(f"{'=' * 12}不执行开鞋盒{'=' * 12}")
+        print(f"当前奖品:")
         url = "https://www.57box.cn/app/index.php"
 
         params = {
@@ -192,7 +198,8 @@ for i, account in enumerate(accounts_list, start=1):
         for prize in all_prizes:
             prize_title = prize['prize']['complete_prize_title']
             prizes_count = prize['prizes_count']
-            print(f"{prize_title} 数量:x{prizes_count}")
+            prize_market_price = prize['prize']['prize_market_price']
+            print(f"{prize_title} 市场价:{prize_market_price}元 数量:x{prizes_count}")
     elif response['errno'] == 999:
         print(f"{response['message']}")
         break

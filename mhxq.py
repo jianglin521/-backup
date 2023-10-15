@@ -16,8 +16,7 @@ aliAccount = ""  # 支付宝提现账号
 #默认提现1r  务必完善参数
 
 import time
-from dotenv import load_dotenv
-load_dotenv()
+
 import random
 import os
 import requests

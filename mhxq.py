@@ -1,7 +1,7 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
 密盒星球_V0.1   看视频得金币（目前可以无限刷）
-APP下载入口 https://wwtk.lanzoub.com/iuiX91bvpjoh密码:a2va
+入口 https://download.chiguavod.com/#/?inviteCode=16Z54j
 抓包域名 https://jkyx-api.chiguavod.com/applet/system/type/getUserInfo取出sessionId参数
 export mhxqCK=sessionId
 多账号用'===='隔开 例 账号1====账号2

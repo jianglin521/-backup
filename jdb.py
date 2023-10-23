@@ -1,7 +1,7 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
 加多宝_V0.1   兑饮品
-入口 http://up.yuojo.com/index/index/register?code=61DM98
+入口 微信小程序_点亮城市 与加多宝喝彩
 抓包域名https://wb.onlineweixin.com/取出token
 export jdbtoken=token
 多账号用'===='隔开 例 账号1====账号2

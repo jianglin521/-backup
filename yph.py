@@ -1,6 +1,6 @@
 """
 @Qim出品 仅供学习交流，请在下载后的24小时内完全删除 请勿将任何内容用于商业或非法目的，否则后果自负。
-玉品汇_V0.11   红包
+玉品汇_V0.12   红包
 入口 http://up.yuojo.com/index/index/register?code=61DM98
 抓包域名 http://up.yuojo.com取出token
 export yphtoken=token
@@ -42,10 +42,16 @@ else:
             shuijing = response['data']['shuijing']
             print(nickname)
             print(f"客官稍等片刻....")
-            for i in range(3):
+            for i in range(2):
                 url = "http://up.yuojo.com/api/circle/send_ad"
                 data = {
                     'type': 'video_sign'
+                }
+                response = requests.post(url, headers=headers, json=data).json()
+                print(response)
+                time.sleep(10)
+                data = {
+                    'type': 'video_ad'
                 }
                 response = requests.post(url, headers=headers, json=data).json()
                 print(response)
@@ -100,6 +106,7 @@ else:
                 if yushi_cs == 1:
                     print(f"=============玉石兑换==============")
                     url = "http://up.yuojo.com/api/yupu/saleYushi"
+                    result = (yushi // 10) * 10
                     data = {
                         'sale_num': yushi
                     }

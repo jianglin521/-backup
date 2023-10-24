@@ -44,21 +44,26 @@ else:
             print(f"客官稍等片刻....")
             for i in range(2):
                 url = "http://up.yuojo.com/api/circle/send_ad"
-                data = {
+                data1 = {
                     'type': 'video_sign'
                 }
-                response = requests.post(url, headers=headers, json=data).json()
+                response = requests.post(url, headers=headers, json=data1).json()
                 print(response)
                 time.sleep(10)
-                data = {
+                data2 = {
                     'type': 'video_ad'
                 }
-                response = requests.post(url, headers=headers, json=data).json()
+                response = requests.post(url, headers=headers, json=data2).json()
                 print(response)
                 time.sleep(10)
             url = 'http://up.yuojo.com/api/user/getSignProfit'
-            response = requests.post(url, headers=headers, json=data).json()
+            response = requests.post(url, headers=headers, json=data1).json()
             msg = response['msg']
+            print(msg)
+            url = 'http://up.yuojo.com/api/user/getAdProfit'
+            response = requests.post(url, headers=headers, json=data2).json()
+            msg = response['msg']
+            print(msg)
             if xianshi_dh == 1:
                 print(f"==============仙石兑换==============")
                 url = "http://up.yuojo.com/api/user/info"

@@ -113,7 +113,7 @@ else:
                     url = "http://up.yuojo.com/api/yupu/saleYushi"
                     result = (yushi // 10) * 10
                     data = {
-                        'sale_num': yushi
+                        'sale_num': result
                     }
                     response = requests.post(url, headers=headers, json=data).json()
                     msg = response['msg']

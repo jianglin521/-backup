@@ -1,7 +1,7 @@
-name: ziye888-sync
+name: smiek2121-sync
 on:
   schedule:
-    - cron: '1 */6 * * *'
+    - cron: '1 */8 * * *'
   workflow_dispatch:
   watch:
     types: started
@@ -22,7 +22,7 @@ jobs:
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/ziye888/JavaScript.git"
-          source_branch: "main"
-          destination_branch: "ziye888"
+          source_repo: "https://github.com/smiek2121/scripts"
+          source_branch: "master"
+          destination_branch: "smiek2121"
           github_token: ${{ secrets.PAT }}

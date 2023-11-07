@@ -1,7 +1,7 @@
 name: qianmo8-sync
 on:
   schedule:
-    - cron: '1 */6 * * *'
+    - cron: '1 */8 * * *'
   workflow_dispatch:
   watch:
     types: started
